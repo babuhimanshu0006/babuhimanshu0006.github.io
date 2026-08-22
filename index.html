@@ -185,43 +185,46 @@ x[1].forEach((option,index)=>{
 ans.appendChild(b);
 });
 }
-
 function show(id,btn){
   document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-
   if(btn) btn.classList.add('active');
 
   if(id==='test') start();
 }
 
 function next(){
-  if(!answered)return alert('Pehle answer select karo!');
+  if(!answered){
+    alert('Pehle answer select karo!');
+    return;
+  }
   i++;
   render();
 }
 
 function save(){
-  let n=document.getElementById('name').value.trim();
-}.
+  const input=document.getElementById('name');
+  const hello=document.getElementById('hello');
+  const n=input.value.trim();
+
   if(n){
     localStorage.setItem('name',n);
-    document.getElementById('hello').textContent=`Hi, ${n} 👋`;
+    hello.textContent=`Hi, ${n} 👋`;
     alert('Profile saved!');
   }
+}
 
-/* NAVIGATION */
 const nav=document.querySelectorAll('nav button');
 
-if(nav[0]) nav[0].onclick=()=>show('home',nav[0]);
-if(nav[1]) nav[1].onclick=()=>show('study',nav[1]);
-if(nav[2]) nav[2].onclick=()=>show('test',nav[2]);
-if(nav[3]) nav[3].onclick=()=>show('plan',nav[3]);
-if(nav[4]) nav[4].onclick=()=>show('profile',nav[4]);
+nav.forEach((button,index)=>{
+  button.onclick=()=>{
+    const pages=['home','study','test','plan','profile'];
+    show(pages[index],button);
+  };
+});
 
-/* HOME CARDS */
 const cards=document.querySelectorAll('.home .card');
 
 cards.forEach(card=>{
@@ -238,39 +241,120 @@ cards.forEach(card=>{
   if(text.includes('Study Planner')){
     card.onclick=()=>show('plan',nav[3]);
   }
-});async function solveDoubt(){
-  const input = document.getElementById("doubt");
-  const answer = document.getElementById("aiAnswer");
+});
+function show(id,btn){
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
 
-  const doubt = input.value.trim();
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+
+  if(id==='test') start();
+}
+
+function next(){
+  if(!answered){
+    alert('Pehle answer select karo!');
+    return;
+  }
+  i++;
+  render();
+}
+
+function save(){
+  const input=document.getElementById('name');
+  const hello=document.getElementById('hello');
+
+  const n=input.value.trim();
+
+  if(n){
+    localStorage.setItem('name',n);
+    hello.textContent=`Hi, ${n} 👋`;
+    alert('Profile saved!');
+  }
+}
+
+/* NAVIGATION */
+const nav=document.querySelectorAll('nav button');
+
+nav.forEach((button,index)=>{
+  button.onclick=()=>{
+    const pages=['home','study','test','plan','profile'];
+    show(pages[index],button);
+  };
+});
+
+/* HOME CARDS */
+const cards=document.querySelectorAll('.home .card');
+
+cards.forEach(card=>{
+  const text=card.innerText;
+
+  if(text.includes('Notes')){
+    card.onclick=()=>{
+      show('study',nav[1]);
+    };
+  }
+
+  if(text.includes('Mock Tests')){
+    card.onclick=()=>{
+      show('test',nav[2]);
+    };
+  }
+
+  if(text.includes('Study Planner')){
+    card.onclick=()=>{
+      show('plan',nav[3]);
+    };
+  }
+
+  if(text.includes('AI Doubt')){
+    card.onclick=()=>{
+      show('ai',null);
+    };
+  }
+});
+
+/* AI DOUBT SOLVER */
+async function solveDoubt(){
+
+  const input=document.getElementById('doubt');
+  const answer=document.getElementById('aiAnswer');
+
+  const doubt=input.value.trim();
 
   if(!doubt){
-    answer.textContent = "Pehle apna doubt likho 🙂";
+    answer.textContent='Pehle apna doubt likho 🙂';
     return;
   }
 
-  answer.textContent = "AI soch raha hai... 🤖";
+  answer.textContent='AI soch raha hai... 🤖';
 
   try{
-    const url =
-      "https://text.pollinations.ai/" +
+
+    const url=
+      'https://text.pollinations.ai/' +
       encodeURIComponent(
-        "You are a helpful Biology study assistant. Answer this student's doubt simply and correctly in Hindi/Hinglish. Doubt: " +
-        doubt
+        "You are a helpful Biology study assistant. " +
+        "Answer this student's doubt simply and correctly in Hindi/Hinglish. " +
+        "Doubt: " + doubt
       );
 
-    const response = await fetch(url);
+    const response=await fetch(url);
 
     if(!response.ok){
-      throw new Error("AI request failed");
+      throw new Error('AI request failed');
     }
 
-    const result = await response.text();
+    const result=await response.text();
 
-    answer.textContent = result;
+    answer.textContent=result;
+
   }catch(error){
-    answer.textContent =
-      "AI abhi connect nahi ho pa raha. Internet check karke dobara try karo.";
+
+    answer.textContent=
+      'AI abhi connect nahi ho pa raha. Internet check karke dobara try karo.';
+
   }
 }
 </script></body></html>
