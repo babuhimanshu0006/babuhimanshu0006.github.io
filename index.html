@@ -148,30 +148,32 @@ function render(){
   }
 
   answered=false;
-  let x=qs[order[i]];
-  qno.textContent='Question '+(i+1)+'/'+order.length;
-  q.textContent=x[0];
-  ans.innerHTML='';
+let x=qs[order[i]];
 
-  x[1].forEach((option,index)=>{
-    let b=document.createElement('button');
-    b.textContent=option;
-    b.style.display='block';
-    b.style.width='100%';
-    b.style.margin='6px 0';
-    b.onclick=function(){
-      if(answered)return;
-      answered=true;
-      if(index===x[2]){
-        score++;
-        b.style.background='#d1fae5';
-      }else{
-        b.style.background='#fee2e2';
-      }
-    };
-    ans.appendChild(b);
-  });
-}
+q.textContent='Question '+(i+1)+'/'+order.length;
+q.textContent=x[0];
+
+ans.innerHTML='';
+
+x[1].forEach((option,index)=>{
+  let b=document.createElement('button');
+  b.textContent=option;
+  b.style.display='block';
+  b.style.width='100%';
+  b.style.margin='6px 0';
+  b.onclick=function(){
+    if(answered)return;
+    answered=true;
+
+    if(index==x[2]){
+      score++;
+      b.style.background='#d1fae5';
+    }else{
+      b.style.background='#fee2e2';
+    }
+  };
+  ans.appendChild(b);
+});
 function show(id,btn){
   document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
