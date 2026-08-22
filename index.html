@@ -216,132 +216,14 @@ function save(){
   }
 }
 
-const nav=document.querySelectorAll('nav button');
+const nav=document.querySelectorAll('.nav button');
 
 nav.forEach((button,index)=>{
   button.onclick=()=>{
     const pages=['home','study','test','plan','profile'];
     show(pages[index],button);
   };
-});
-
-const cards=document.querySelectorAll('.home .card');
-
-cards.forEach(card=>{
-  const text=card.innerText;
-
-  if(text.includes('Notes')){
-    card.onclick=()=>show('study',nav[1]);
-  }
-
-  if(text.includes('Mock Tests')){
-    card.onclick=()=>show('test',nav[2]);
-  }
-
-  if(text.includes('Study Planner')){
-    card.onclick=()=>show('plan',nav[3]);
-  }
-});
-function show(id,btn){
-  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-
-  if(id==='test') start();
-}
-
-function next(){
-  if(!answered){
-    alert('Pehle answer select karo!');
-    return;
-  }
-  i++;
-  render();
-}
-
-function save(){
-  const input=document.getElementById('name');
-  const hello=document.getElementById('hello');
-
-  const n=input.value.trim();
-
-  if(n){
-    localStorage.setItem('name',n);
-    hello.textContent=`Hi, ${n} 👋`;
-    alert('Profile saved!');
-  }
-}
-
-/* NAVIGATION */
-const nav=document.querySelectorAll('nav button');
-
-nav.forEach((button,index)=>{
-  button.onclick=()=>{
-    const pages=['home','study','test','plan','profile'];
-    show(pages[index],button);
-  };
-});
-
-/* HOME CARDS */
-const cards=document.querySelectorAll('.home .card');
-
-cards.forEach(card=>{
-  const text=card.innerText;
-
-  if(text.includes('Notes')){
-    card.onclick=()=>{
-      show('study',nav[1]);
-    };
-  }
-
-  if(text.includes('Mock Tests')){
-    card.onclick=()=>{
-      show('test',nav[2]);
-    };
-  }
-
-  if(text.includes('Study Planner')){
-    card.onclick=()=>{
-      show('plan',nav[3]);
-    };
-  }
-
-  if(text.includes('AI Doubt')){
-    card.onclick=()=>{
-      show('ai',null);
-    };
-  }
-});
-
-/* AI DOUBT SOLVER */
-async function solveDoubt(){
-
-  const input=document.getElementById('doubt');
-  const answer=document.getElementById('aiAnswer');
-
-  const doubt=input.value.trim();
-
-  if(!doubt){
-    answer.textContent='Pehle apna doubt likho 🙂';
-    return;
-  }
-
-  answer.textContent='AI soch raha hai... 🤖';
-
-  try{
-
-    const url=
-      'https://text.pollinations.ai/' +
-      encodeURIComponent(
-        "You are a helpful Biology study assistant. " +
-        "Answer this student's doubt simply and correctly in Hindi/Hinglish. " +
-        "Doubt: " + doubt
-      );
-
-    const response=await fetch(url);
-
+}); nhi 
     if(!response.ok){
       throw new Error('AI request failed');
     }
