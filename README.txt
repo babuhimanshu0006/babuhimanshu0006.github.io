@@ -1,0 +1,1 @@
+PadhaiHub Web/PWA. Upload these files to a GitHub repository you own, then deploy with a static hosting service. Keep the GitHub/hosting accounts in your own email so you retain control.
