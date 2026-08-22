@@ -162,22 +162,28 @@ x[1].forEach((option,index)=>{
   b.style.width='100%';
   b.style.margin='6px 0';
   b.onclick=function(){
-    if(answered)return;
-    answered=true;
+  if(answered)return;
+  answered=true;
 
-    if(index==x[2]){
-      score++;
-      b.style.background='#d1fae5';
-    }else{
+  if(index==x[2]){
+    score++;
+    b.style.background='#d1fae5';
+  }else{
+    b.style.background='#fee2e2';
+  }
+};
+
+ans.appendChild(b);
+});
+}
+
 function show(id,btn){
   document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
 
-  if(btn){
-    btn.classList.add('active');
-  }
+  if(btn) btn.classList.add('active');
 
   if(id==='test') start();
 }
@@ -189,24 +195,45 @@ function next(){
 }
 
 function save(){
-  let n=document.getElementById("name").value.trim();
+  let n=document.getElementById('name').value.trim();
 
   if(n){
-    localStorage.setItem("name",n);
-    document.getElementById("hello").textContent=`Hi, ${n} 👋`;
-    alert("Profile saved!");
+    localStorage.setItem('name',n);
+    document.getElementById('hello').textContent=`Hi, ${n} 👋`;
+    alert('Profile saved!');
   }
 }
 
-if(localStorage.getItem("name")){
-  document.getElementById("hello").textContent=`Hi, ${localStorage.getItem("name")} 👋`;
-  document.getElementById("name").value=localStorage.getItem("name");
+if(localStorage.getItem('name')){
+  document.getElementById('hello').textContent=`Hi, ${localStorage.getItem('name')} 👋`;
+  document.getElementById('name').value=localStorage.getItem('name');
 }
-if(cards[3]) cards[3].onclick = () => show('plan', nav[3]);
-let cards = document.querySelectorAll('#home .card');
-let nav = document.querySelectorAll('nav button');
 
-if(cards[0]) cards[0].onclick = () => show('study', nav[1]);
-if(cards[1]) cards[1].onclick = () => show('test', nav[2]);
-if(cards[3]) cards[3].onclick = () => show('plan', nav[3]);
+/* NAVIGATION */
+const nav=document.querySelectorAll('nav button');
+
+if(nav[0]) nav[0].onclick=()=>show('home',nav[0]);
+if(nav[1]) nav[1].onclick=()=>show('study',nav[1]);
+if(nav[2]) nav[2].onclick=()=>show('test',nav[2]);
+if(nav[3]) nav[3].onclick=()=>show('plan',nav[3]);
+if(nav[4]) nav[4].onclick=()=>show('profile',nav[4]);
+
+/* HOME CARDS */
+const cards=document.querySelectorAll('.home .card');
+
+cards.forEach(card=>{
+  const text=card.innerText;
+
+  if(text.includes('Notes')){
+    card.onclick=()=>show('study',nav[1]);
+  }
+
+  if(text.includes('Mock Tests')){
+    card.onclick=()=>show('test',nav[2]);
+  }
+
+  if(text.includes('Study Planner')){
+    card.onclick=()=>show('plan',nav[3]);
+  }
+});
 </script></body></html>
