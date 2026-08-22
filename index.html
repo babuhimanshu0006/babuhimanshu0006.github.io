@@ -4,7 +4,16 @@
 <section id="home"><div class="card"><b>Overall Progress</b><p>62% syllabus completed</p><div class="progress"><div class="bar"></div></div></div><div class="grid"><div class="card"><div class="icon">📚</div><b>Notes & PDFs</b></div><div class="card" onclick="show('test',document.querySelectorAll('nav button')[2])"><div class="icon">📝</div><b>Mock Tests</b></div><div class="card"><div class="icon">🤖</div><b>AI Doubt Solver</b><small>Coming soon</small></div><div class="card" onclick="show('plan')"><div class="icon">⏰</div><b>Study Planner</b></div></div></section>
 <section id="study" class="hidden"><h2>Subjects</h2><div class="card subject" onclick="this.classList.toggle('open')"><h3>🧬 Biology</h3><div class="chapter"><button onclick="note('Basic Biology')">Basic Biology</button><button onclick="note('Sexual Reproduction')">Sexual Reproduction</button><button onclick="note('Human Reproduction')">Human Reproduction</button><button onclick="note('Reproductive Health')">Reproductive Health</button></div></div><div class="card subject" onclick="this.classList.toggle('open')"><h3>⚛️ Physics</h3><div class="chapter"><button onclick="note('Kinematics')">Kinematics</button><button onclick="note('Laws of Motion')">Laws of Motion</button></div></div><div class="card subject" onclick="this.classList.toggle('open')"><h3>🧪 Chemistry</h3><div class="chapter"><button onclick="note('Atomic Structure')">Atomic Structure</button><button onclick="note('Chemical Bonding')">Chemical Bonding</button></div></div></section>
 <section id="notes" class="hidden"><div class="card"><h2 id="nt">Chapter</h2><p>Yahan real notes/PDF content connect kiya ja sakta hai. Ye abhi demo screen hai.</p><button class="btn" onclick="show('test')">Practice MCQs</button></div></section>
-<section id="test" class="hidden"><div class="card"><p id="qno"></p><h2 id="q"></h2><div id="ans"></div><button class="btn" onclick="next()">Next</button></div></section><section id="result" class="hidden"><div class="card" style="text-align:center"><div style="font-size:60px">🏆</div><h2>Test Complete!</h2><div id="score" style="font-size:42px;font-weight:bold"></div><p id="acc"></p><button class="btn" onclick="start()">Try Again</button></div></section>
+<section id="ai" class="hidden">
+<div class="card">
+<h2>🤖 AI Doubt Solver</h2>
+<p>Apna doubt yahan likho:</p>
+<input id="doubt" placeholder="Type your doubt...">
+<button onclick="solveDoubt()">Ask AI</button>
+<div id="aiAnswer"></div>
+</div>
+</section>
+  <section id="test" class="hidden"><div class="card"><p id="qno"></p><h2 id="q"></h2><div id="ans"></div><button class="btn" onclick="next()">Next</button></div></section><section id="result" class="hidden"><div class="card" style="text-align:center"><div style="font-size:60px">🏆</div><h2>Test Complete!</h2><div id="score" style="font-size:42px;font-weight:bold"></div><p id="acc"></p><button class="btn" onclick="start()">Try Again</button></div></section>
 <section id="plan" class="hidden"><h2>Study Planner</h2><div class="card">✅ Biology — 7:00 PM • 60 min</div><div class="card">○ Chemistry — 8:15 PM • 60 min</div><div class="card">○ Physics — 9:30 PM • 45 min</div></section><section id="profile" class="hidden"><div class="card"><h2>Profile</h2><input id="name" placeholder="Your name"><button class="btn" onclick="save()">Save Profile</button></div></section></main>
 <nav><button class="active" onclick="show('home',this)">🏠<br>Home</button><button onclick="show('study',this)">📚<br>Study</button><button onclick="show('test',this)">📝<br>Test</button><button onclick="show('plan',this)">⏰<br>Plan</button><button onclick="show('profile',this)">👤<br>Profile</button></nav>
 <script>
@@ -234,5 +243,39 @@ cards.forEach(card=>{
   if(text.includes('Study Planner')){
     card.onclick=()=>show('plan',nav[3]);
   }
-});
+});async function solveDoubt(){
+  const input = document.getElementById("doubt");
+  const answer = document.getElementById("aiAnswer");
+
+  const doubt = input.value.trim();
+
+  if(!doubt){
+    answer.textContent = "Pehle apna doubt likho 🙂";
+    return;
+  }
+
+  answer.textContent = "AI soch raha hai... 🤖";
+
+  try{
+    const url =
+      "https://text.pollinations.ai/" +
+      encodeURIComponent(
+        "You are a helpful Biology study assistant. Answer this student's doubt simply and correctly in Hindi/Hinglish. Doubt: " +
+        doubt
+      );
+
+    const response = await fetch(url);
+
+    if(!response.ok){
+      throw new Error("AI request failed");
+    }
+
+    const result = await response.text();
+
+    answer.textContent = result;
+  }catch(error){
+    answer.textContent =
+      "AI abhi connect nahi ho pa raha. Internet check karke dobara try karo.";
+  }
+}
 </script></body></html>
