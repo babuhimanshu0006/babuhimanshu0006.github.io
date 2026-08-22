@@ -199,5 +199,17 @@ function save(){
 if(localStorage.getItem("name")){
   document.getElementById("hello").textContent=`Hi, ${localStorage.getItem("name")} 👋`;
   document.getElementById("name").value=localStorage.getItem("name");
-}
+} // Home cards ko working banana
+let cards = document.querySelectorAll('#home .card');
+let nav = document.querySelectorAll('nav button');
+
+if(cards[0]) cards[0].onclick = () => show('study', nav[1]);
+if(cards[1]) cards[1].onclick = () => show('test', nav[2]);
+if(cards[3]) cards[3].onclick = () => show('plan', nav[3]);
+let cards = document.querySelectorAll('#home .card');
+let nav = document.querySelectorAll('nav button');
+
+if(cards[0]) cards[0].onclick = () => show('study', nav[1]);
+if(cards[1]) cards[1].onclick = () => show('test', nav[2]);
+if(cards[3]) cards[3].onclick = () => show('plan', nav[3]);
 </script></body></html>
