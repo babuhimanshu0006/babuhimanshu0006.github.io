@@ -211,12 +211,7 @@ function save(){
     document.getElementById('hello').textContent=`Hi, ${n} 👋`;
     alert('Profile saved!');
   }
-let cards = document.querySelectorAll('#home .card');
-let nav = document.querySelectorAll('nav button');
 
-if(cards[1]) cards[1].onclick = () => show('notes', nav[1]);
-if(cards[2]) cards[2].onclick = () => show('test', nav[2]);
-if(cards[4]) cards[4].onclick = () => show('plan', nav[3]);
 /* NAVIGATION */
 const nav=document.querySelectorAll('nav button');
 
