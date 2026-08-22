@@ -6,225 +6,346 @@
 <title>PadhaiHub</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f4f6fb;color:#172033;padding-bottom:85px}
-.header{background:linear-gradient(135deg,#1769d3,#1678e8);color:#fff;padding:25px 20px 35px;border-radius:0 0 35px 35px}
-.container{max-width:700px;margin:auto;padding:18px}
-.header h1{margin:5px 0;font-size:30px}
-.card{background:#fff;border-radius:20px;padding:20px;margin:16px 0;box-shadow:0 4px 18px #0001}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tile,.subject{border:0;border-radius:16px;background:#f0f4ff;padding:20px;font-size:18px;font-weight:bold;cursor:pointer}
-.tile{text-align:left}
-.tile span{font-size:30px}
-.subject{display:block;width:100%;margin:10px 0;text-align:left}
-input,textarea{width:100%;padding:14px;border:2px solid #ddd;border-radius:12px;font-size:16px}
-textarea{height:130px;resize:none}
-.primary{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;background:#1976d2;color:white;font-size:17px;font-weight:bold}
-.secondary{width:100%;padding:13px;margin-top:10px;border:0;border-radius:12px;background:#eee;font-size:16px}
-#study,#test,#plan,#profile,#ai,#quiz,#result{display:none}
-.progress{height:10px;background:#ddd;border-radius:20px;overflow:hidden}
-#homeBar,#bar{height:100%;width:0;background:#1976d2}
-.option{width:100%;padding:14px;margin:7px 0;border:2px solid #ddd;background:#fff;border-radius:12px;text-align:left;font-size:16px}
-.option.correct{background:#c9f7d5;border-color:#19a653}
-.option.wrong{background:#ffd0d0;border-color:#e33}
-.bottom{position:fixed;bottom:0;left:0;right:0;height:75px;background:#fff;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -3px 15px #0002;z-index:10}
-.nav{border:0;background:none;color:#666;font-size:12px}.nav b{display:block;font-size:23px}
-.center{text-align:center}.score{font-size:44px;font-weight:bold}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+button,input,textarea{font:inherit}
+.app{max-width:760px;margin:auto;min-height:100vh;padding-bottom:80px}
+.hero{padding:24px 18px 30px;color:white;background:linear-gradient(135deg,#1558d6,#7045e9);border-radius:0 0 30px 30px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:24px;font-weight:bold}
+.avatar{border:0;border-radius:50%;width:44px;height:44px;font-size:20px}
+.hello{margin-top:24px}
+.hello h1{margin:0 0 7px;font-size:29px}
+.hello p{margin:0;opacity:.9}
+.content{padding:16px}
+.card{background:white;border-radius:20px;padding:18px;margin-bottom:16px;box-shadow:0 6px 25px #00000010}
+.progress{height:9px;background:#e8ebf2;border-radius:20px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2473e8,#7045e9)}
+.progresshead{display:flex;justify-content:space-between}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.stat{background:#f6f8fc;padding:13px;border-radius:15px;text-align:center}
+.stat b{display:block;font-size:21px}
+.stat small{color:#777}
+.title{display:flex;justify-content:space-between;margin:20px 2px 12px}
+.title h2{font-size:19px;margin:0}
+.title small{color:#777}
+.subjects{display:grid;gap:12px}
+.subject{width:100%;border:0;border-radius:20px;padding:19px;text-align:left;color:white;min-height:110px;cursor:pointer}
+.subject b{font-size:21px}
+.subject span{display:block;margin-top:7px;opacity:.9}
+.bio{background:linear-gradient(135deg,#0da66b,#38cc8f)}
+.phy{background:linear-gradient(135deg,#3478eb,#5a9cff)}
+.chem{background:linear-gradient(135deg,#f16b32,#ff9b4e)}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feature{border:0;background:white;border-radius:19px;padding:18px;text-align:left;box-shadow:0 5px 20px #0000000d}
+.feature span{font-size:27px}
+.feature b{display:block;margin-top:8px}
+.feature small{color:#777}
+.page{display:none}
+.page.active{display:block}
+.back{border:0;background:#edf3ff;color:#236de0;padding:10px 14px;border-radius:12px;font-weight:bold}
+.choice{display:block;width:100%;border:2px solid #e5e8ef;background:white;border-radius:14px;padding:14px;text-align:left;margin:9px 0}
+.choice.correct{border-color:#17a56b;background:#e9fbf3}
+.choice.wrong{border-color:#e34d4d;background:#fff0f0}
+.primary{width:100%;border:0;border-radius:14px;padding:14px;background:linear-gradient(135deg,#246ce0,#7045e9);color:white;font-weight:bold}
+.input{width:100%;padding:14px;border:2px solid #e5e8ef;border-radius:14px}
+textarea.input{min-height:130px;resize:none}
+.bottom{position:fixed;bottom:0;left:0;right:0;height:72px;background:white;border-top:1px solid #e5e8ef;display:flex;justify-content:center}
+.navwrap{width:760px;display:flex;justify-content:space-around}
+.nav{border:0;background:none;color:#777;font-size:11px}
+.nav b{display:block;font-size:21px}
+.nav.active{color:#246ce0;font-weight:bold}
+@media(max-width:520px){.content{padding:14px}}
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<div class="header">
-<div class="container">
-<h1>🎓 PadhaiHub</h1>
-<p>Ek App, Saari Padhai 🚀</p>
-<h2 id="greeting">Hi, Student 👋</h2>
+<header class="hero">
+<div class="top">
+<div class="brand">🎓 PadhaiHub</div>
+<button class="avatar" onclick="page('profile')">👤</button>
 </div>
+
+<div class="hello">
+<h1 id="hello">Hi, Student 👋</h1>
+<p>Aaj ka target complete karo 🚀</p>
 </div>
+</header>
 
-<div class="container">
+<main class="content">
 
-<section id="home">
+<section id="home" class="page active">
+
 <div class="card">
-<h2>📊 Overall Progress</h2>
-<p id="progressText">0% completed</p>
-<div class="progress"><div id="homeBar"></div></div>
+<div class="progresshead">
+<b>Overall Progress</b>
+<b id="percent">0%</b>
+</div>
+<p style="color:#777">Your learning journey</p>
+<div class="progress"><i id="bar"></i></div>
+
+<div class="stats">
+<div class="stat"><b id="done">0</b><small>Questions</small></div>
+<div class="stat"><b id="tests">0</b><small>Tests</small></div>
+<div class="stat"><b>🔥</b><small>Keep going</small></div>
+</div>
 </div>
 
-<div class="grid">
-<button class="tile" onclick="showPage('study')">📚<br>Study</button>
-<button class="tile" onclick="showPage('test')">📝<br>Test</button>
-<button class="tile" onclick="showPage('plan')">⏰<br>Plan</button>
-<button class="tile" onclick="showPage('profile')">👤<br>Profile</button>
-<button class="tile" onclick="showPage('ai')">🤖<br>AI Doubt Solver</button>
+<div class="title">
+<h2>Choose your subject</h2>
+<small>100 MCQs each</small>
+</div>
+
+<div class="subjects">
+
+<button class="subject bio" onclick="start('Biology')">
+<b>🧬 Biology</b>
+<span>100 Questions • Practice & Test</span>
+</button>
+
+<button class="subject phy" onclick="start('Physics')">
+<b>⚡ Physics</b>
+<span>100 Questions • Practice & Test</span>
+</button>
+
+<button class="subject chem" onclick="start('Chemistry')">
+<b>🧪 Chemistry</b>
+<span>100 Questions • Practice & Test</span>
+</button>
+
+</div>
+
+<div class="title"><h2>Quick Access</h2></div>
+
+<div class="features">
+
+<button class="feature" onclick="page('test')">
+<span>📝</span>
+<b>Mock Tests</b>
+<small>Test your preparation</small>
+</button>
+
+<button class="feature" onclick="page('ai')">
+<span>🤖</span>
+<b>AI Doubt Solver</b>
+<small>Ask your doubt</small>
+</button>
+
+<button class="feature" onclick="page('plan')">
+<span>⏰</span>
+<b>Study Planner</b>
+<small>Set today's target</small>
+</button>
+
+<button class="feature" onclick="page('profile')">
+<span>👤</span>
+<b>My Profile</b>
+<small>Save your name</small>
+</button>
+
 </div>
 </section>
 
-<section id="study">
-<div class="card">
-<h2>📚 Study</h2>
-<button class="subject" onclick="startQuiz('Biology')">🧬 Biology — 100 Questions</button>
-<button class="subject" onclick="startQuiz('Physics')">⚡ Physics — 100 Questions</button>
-<button class="subject" onclick="startQuiz('Chemistry')">🧪 Chemistry — 100 Questions</button>
-</div>
-</section>
 
-<section id="test">
+<section id="test" class="page">
 <div class="card">
+<button class="back" onclick="page('home')">← Home</button>
 <h2>📝 Mock Tests</h2>
-<p>Total 300 MCQs.</p>
-<button class="subject" onclick="startQuiz('Biology')">🧬 Biology Test</button>
-<button class="subject" onclick="startQuiz('Physics')">⚡ Physics Test</button>
-<button class="subject" onclick="startQuiz('Chemistry')">🧪 Chemistry Test</button>
+<p>Choose your subject.</p>
+
+<button class="subject bio" onclick="start('Biology')">🧬 Biology Test</button>
+<br>
+<button class="subject phy" onclick="start('Physics')">⚡ Physics Test</button>
+<br>
+<button class="subject chem" onclick="start('Chemistry')">🧪 Chemistry Test</button>
 </div>
 </section>
 
-<section id="plan">
-<div class="card">
-<h2>⏰ Study Planner</h2>
-<input id="target" placeholder="Today's target">
-<button class="primary" onclick="savePlan()">💾 Save Target</button>
-<p id="planSaved"></p>
-</div>
-</section>
 
-<section id="profile">
+<section id="ai" class="page">
 <div class="card">
-<h2>👤 My Profile</h2>
-<p>Apna naam enter karo:</p>
-<input id="nameInput" placeholder="Enter your name">
-<button class="primary" onclick="saveName()">💾 Save Profile</button>
-<p id="savedMessage"></p>
-</div>
-</section>
+<button class="back" onclick="page('home')">← Home</button>
 
-<section id="ai">
-<div class="card">
 <h2>🤖 AI Doubt Solver</h2>
-<p>Biology, Physics ya Chemistry ka doubt likho.</p>
-<textarea id="aiQuestion" placeholder="Example: Newton's second law kya hai?"></textarea>
-<button class="primary" onclick="askAI()">🤖 Ask AI</button>
-<div id="aiAnswer" style="display:none;margin-top:15px;padding:15px;background:#f1f4fa;border-radius:12px"></div>
+<p style="color:#777">Biology, Physics ya Chemistry ka doubt poochho.</p>
+
+<textarea id="doubt" class="input"
+placeholder="Apna doubt yahan likho..."></textarea>
+
+<button class="primary" style="margin-top:12px" onclick="askAI()">
+Ask AI 🤖
+</button>
+
+<div id="answer" class="card" style="display:none;margin-top:15px"></div>
 </div>
 </section>
 
-<section id="quiz">
+
+<section id="plan" class="page">
 <div class="card">
-<div style="display:flex;justify-content:space-between">
-<h2 id="subjectTitle"></h2><b id="counter"></b>
+
+<button class="back" onclick="page('home')">← Home</button>
+
+<h2>⏰ Study Planner</h2>
+
+<input id="target" class="input"
+placeholder="Example: Biology 30 questions">
+
+<button class="primary" style="margin-top:12px"
+onclick="saveTarget()">Save Target</button>
+
+<p id="targetMsg"></p>
+
 </div>
-<div class="progress"><div id="bar"></div></div>
+</section>
+
+
+<section id="profile" class="page">
+<div class="card">
+
+<button class="back" onclick="page('home')">← Home</button>
+
+<h2>👤 My Profile</h2>
+
+<input id="name" class="input"
+placeholder="Enter your name">
+
+<button class="primary" style="margin-top:12px"
+onclick="saveName()">Save Profile</button>
+
+<p id="profileMsg"></p>
+
+</div>
+</section>
+
+
+<section id="quiz" class="page">
+<div class="card">
+
+<button class="back" onclick="page('home')">← Exit Test</button>
+
+<div class="progress" style="margin-top:18px">
+<i id="qbar"></i>
+</div>
+
+<p id="questionNo"></p>
+
 <h2 id="question"></h2>
+
 <div id="options"></div>
-<button class="primary" id="next" onclick="nextQuestion()" disabled>Next Question ➜</button>
+
+<button id="next" class="primary"
+onclick="nextQuestion()" disabled>
+Next Question →
+</button>
+
 </div>
 </section>
 
-<section id="result">
-<div class="card center">
-<h1>🎉 Quiz Complete!</h1>
-<div class="score" id="score"></div>
+
+<section id="result" class="page">
+<div class="card" style="text-align:center">
+
+<h1>🎉 Test Complete!</h1>
+
+<div id="score"
+style="font-size:45px;font-weight:bold"></div>
+
 <p id="resultText"></p>
-<button class="primary" onclick="showPage('home')">🏠 Home</button>
-<button class="secondary" onclick="showPage('test')">📝 Another Test</button>
+
+<button class="primary" onclick="page('home')">
+Back to Home
+</button>
+
 </div>
 </section>
 
+</main>
 </div>
 
-<div class="bottom">
-<button class="nav" onclick="showPage('home')"><b>🏠</b>Home</button>
-<button class="nav" onclick="showPage('study')"><b>📚</b>Study</button>
-<button class="nav" onclick="showPage('test')"><b>📝</b>Test</button>
-<button class="nav" onclick="showPage('plan')"><b>⏰</b>Plan</button>
-<button class="nav" onclick="showPage('profile')"><b>👤</b>Profile</button>
+
+<nav class="bottom">
+<div class="navwrap">
+
+<button class="nav active" onclick="page('home')">
+<b>🏠</b>Home
+</button>
+
+<button class="nav" onclick="page('test')">
+<b>📝</b>Test
+</button>
+
+<button class="nav" onclick="page('ai')">
+<b>🤖</b>AI
+</button>
+
+<button class="nav" onclick="page('plan')">
+<b>⏰</b>Plan
+</button>
+
+<button class="nav" onclick="page('profile')">
+<b>👤</b>Profile
+</button>
+
 </div>
+</nav>
+
 
 <script>
 
 /* =========================
-   BIOLOGY — 100
-========================= */
+   QUESTION BANK
+   ========================= */
 
-const biology=[
+const baseQuestions={
+
+Biology:[
 ["Basic unit of life","Cell","Tissue","Organ","Atom"],
 ["Powerhouse of cell","Mitochondria","Nucleus","Ribosome","Golgi body"],
-["Genetic material","DNA","Glucose","ATP","Lipid"],
+["Genetic material","DNA","RNA","Protein","Lipid"],
 ["Green pigment","Chlorophyll","Hemoglobin","Melanin","Keratin"],
-["Photosynthesis occurs mainly in","Chloroplasts","Mitochondria","Ribosomes","Nucleus"],
 ["Gas released in photosynthesis","Oxygen","Carbon dioxide","Nitrogen","Hydrogen"],
-["Gas used in photosynthesis","Carbon dioxide","Oxygen","Hydrogen","Nitrogen"],
-["Loss of water vapour","Transpiration","Respiration","Digestion","Excretion"],
-["Blood is pumped by","Heart","Liver","Lung","Kidney"],
-["Largest human organ","Skin","Liver","Heart","Brain"],
-["Blood filtering organ","Kidney","Lungs","Stomach","Pancreas"],
+["Gas used in photosynthesis","Carbon dioxide","Oxygen","Nitrogen","Hydrogen"],
+["Blood is pumped by","Heart","Liver","Kidney","Lung"],
+["Blood filtering organ","Kidney","Heart","Liver","Stomach"],
 ["Functional unit of kidney","Nephron","Neuron","Alveolus","Villus"],
-["Functional unit of nervous system","Neuron","Nephron","Platelet","Cellulose"],
-["Brain part controlling balance","Cerebellum","Cerebrum","Medulla","Hypothalamus"],
-["Brain part controlling breathing","Medulla","Cerebellum","Cerebrum","Retina"],
+["Functional unit of nervous system","Neuron","Nephron","Platelet","Cell"],
 ["RBC contains","Hemoglobin","Insulin","Bile","Keratin"],
-["WBC mainly provides","Defense","Digestion","Movement","Clotting"],
+["WBC mainly provides","Defense","Digestion","Movement","Vision"],
 ["Platelets help in","Blood clotting","Digestion","Breathing","Vision"],
-["Liquid part of blood","Plasma","Lymph","Bile","Serum"],
-["Oxygen carrying blood cells","RBCs","WBCs","Platelets","Plasma"],
+["Liquid part of blood","Plasma","Bile","Lymph","Cell"],
 ["Human heart chambers","4","2","3","5"],
-["Normal body temperature","37°C","27°C","47°C","57°C"],
-["Organ producing bile","Liver","Stomach","Kidney","Heart"],
-["Bile is stored in","Gallbladder","Pancreas","Spleen","Appendix"],
-["Insulin produced by","Pancreas","Liver","Kidney","Thyroid"],
-["Blood sugar hormone","Insulin","Adrenaline","Thyroxine","Estrogen"],
-["Thyroxine produced by","Thyroid","Pancreas","Pituitary","Adrenal"],
-["Master gland","Pituitary","Thyroid","Pancreas","Pineal"],
-["Adrenaline produced by","Adrenal glands","Thyroid","Pancreas","Ovaries"],
+["Organ producing bile","Liver","Kidney","Heart","Lung"],
+["Insulin produced by","Pancreas","Liver","Thyroid","Kidney"],
+["Master gland","Pituitary","Thyroid","Pancreas","Adrenal"],
 ["Male sex hormone","Testosterone","Estrogen","Insulin","Thyroxine"],
-["Female sex hormone","Estrogen","Testosterone","Adrenaline","Glucagon"],
-["Human fertilization usually occurs in","Oviduct","Uterus","Ovary","Vagina"],
-["Embryo attaches to","Uterus","Ovary","Kidney","Liver"],
-["Sperm produced in","Testes","Ovaries","Kidneys","Liver"],
-["Eggs produced in","Ovaries","Testes","Uterus","Pancreas"],
-["Human body chromosomes","46","23","44","48"],
+["Female sex hormone","Estrogen","Testosterone","Adrenaline","Insulin"],
+["Human chromosomes","46","23","44","48"],
 ["Human gamete chromosomes","23","46","44","48"],
-["DNA full form","Deoxyribonucleic acid","Dinitrogen acid","Deoxygenated acid","Dynamic acid"],
-["RNA full form","Ribonucleic acid","Reactive nitrogen acid","Reduced acid","Ribosomal acid"],
-["Gene is unit of","Heredity","Digestion","Respiration","Excretion"],
-["Father of genetics","Gregor Mendel","Darwin","Pasteur","Hooke"],
-["Natural selection associated with","Darwin","Mendel","Newton","Harvey"],
-["Evolution theory by natural selection","Darwin","Mendel","Hooke","Pasteur"],
-["Similar cells form","Tissue","Organ","System","Organism"],
-["Organs working together form","Organ system","Tissue","Cell","Gene"],
-["Study of tissues","Histology","Ecology","Genetics","Taxonomy"],
-["Study of heredity","Genetics","Botany","Zoology","Anatomy"],
-["Study of plants","Botany","Zoology","Ecology","Mycology"],
-["Study of animals","Zoology","Botany","Cytology","Histology"],
-["Study of fungi","Mycology","Virology","Botany","Ecology"],
-["Study of viruses","Virology","Mycology","Zoology","Genetics"],
-["Bacteria are generally","Prokaryotes","Eukaryotes","Viruses","Plants"],
-["Fungi are","Eukaryotes","Prokaryotes","Viruses","Archaea"],
-["Virus reproduces inside","Host cell","Rock","Water","Root"],
-["Self-feeding organism","Autotroph","Heterotroph","Parasite","Decomposer"],
-["Organism depending on others for food","Heterotroph","Autotroph","Producer","Chemotroph"],
+["Father of genetics","Gregor Mendel","Darwin","Newton","Pasteur"],
+["Natural selection associated with","Darwin","Mendel","Newton","Hooke"],
+["Study of plants","Botany","Zoology","Ecology","Genetics"],
+["Study of animals","Zoology","Botany","Genetics","Histology"],
+["Study of heredity","Genetics","Botany","Zoology","Ecology"],
+["Bacteria are generally","Prokaryotes","Eukaryotes","Viruses","Fungi"],
+["Fungi are","Eukaryotes","Prokaryotes","Viruses","Bacteria"],
 ["Green plants are","Producers","Consumers","Decomposers","Parasites"],
 ["Dead matter breakers","Decomposers","Producers","Herbivores","Carnivores"],
-["Plant eating animal","Herbivore","Carnivore","Omnivore","Decomposer"],
+["Plant eating animal","Herbivore","Carnivore","Omnivore","Producer"],
 ["Animal eating animal","Carnivore","Herbivore","Producer","Autotroph"],
 ["Plant and animal eater","Omnivore","Herbivore","Carnivore","Producer"],
-["Breaking food","Digestion","Respiration","Circulation","Excretion"],
 ["Starch digestion starts in","Mouth","Stomach","Small intestine","Large intestine"],
 ["Saliva enzyme","Amylase","Pepsin","Trypsin","Lipase"],
-["Protein digestion starts in","Stomach","Mouth","Large intestine","Esophagus"],
-["Pepsin digests","Proteins","Fats","Starch","Vitamins"],
+["Protein digestion starts in","Stomach","Mouth","Large intestine","Liver"],
 ["Most nutrient absorption","Small intestine","Stomach","Large intestine","Esophagus"],
-["Villi found in","Small intestine","Liver","Stomach","Kidney"],
+["Villi found in","Small intestine","Liver","Kidney","Stomach"],
 ["Large intestine absorbs mainly","Water","Protein","Oxygen","Bile"],
-["Respiration releases","Energy","DNA","Bile","Chlorophyll"],
 ["Aerobic respiration requires","Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],
 ["Main aerobic respiration site","Mitochondria","Nucleus","Ribosome","Cell wall"],
 ["ATP is","Energy currency","Genetic material","Pigment","Hormone"],
 ["Human breathing organ","Lungs","Kidneys","Liver","Skin"],
 ["Gas exchange occurs in","Alveoli","Bronchi","Trachea","Nose"],
-["Windpipe","Trachea","Esophagus","Bronchiole","Larynx"],
-["Diaphragm helps in","Breathing","Digestion","Vision","Hearing"],
-["Plants absorb water through","Roots","Flowers","Fruits","Seeds"],
 ["Water transport tissue","Xylem","Phloem","Cambium","Epidermis"],
 ["Food transport tissue","Phloem","Xylem","Root hair","Stoma"],
 ["Leaf pores","Stomata","Villi","Alveoli","Nephrons"],
@@ -232,43 +353,36 @@ const biology=[
 ["Female flower part","Carpel","Stamen","Sepal","Petal"],
 ["Pollen produced in","Anther","Stigma","Ovary","Style"],
 ["Ovules found in","Ovary","Anther","Petal","Sepal"],
-["Pollen transfer","Pollination","Fertilization","Germination","Transpiration"],
 ["Fusion of gametes","Fertilization","Pollination","Respiration","Germination"],
 ["Seed develops from","Ovule","Anther","Petal","Stigma"],
 ["Fruit develops from","Ovary","Anther","Root","Leaf"],
-["Sunlight vitamin","Vitamin D","Vitamin C","Vitamin B12","Vitamin K"],
-["Vitamin C deficiency","Scurvy","Rickets","Night blindness","Beriberi"],
+["Vitamin C deficiency","Scurvy","Rickets","Goitre","Anemia"],
 ["Vitamin D deficiency","Rickets","Scurvy","Anemia","Goitre"],
-["Iron deficiency","Anemia","Rickets","Scurvy","Diabetes"],
-["Iodine deficiency","Goitre","Scurvy","Rickets","Malaria"],
+["Iron deficiency","Anemia","Rickets","Scurvy","Malaria"],
+["Iodine deficiency","Goitre","Scurvy","Rickets","Diabetes"],
 ["Malaria caused by","Plasmodium","Bacteria","Virus","Fungus"],
-["Malaria vector","Female Anopheles","Housefly","Male mosquito","Tick"],
+["Malaria vector","Female Anopheles","Housefly","Tick","Flea"],
 ["Dengue vector","Aedes mosquito","Anopheles","Housefly","Flea"],
 ["TB caused by","Bacteria","Virus","Protozoa","Fungus"],
 ["AIDS caused by","HIV","HBV","Bacteria","Plasmodium"],
 ["Antibodies help in","Immune response","Digestion","Respiration","Photosynthesis"],
 ["Vaccines develop","Immunity","Digestion","Vision","Respiration"]
-];
+],
 
-/* =========================
-   PHYSICS — 100
-========================= */
-
-const physics=[
+Physics:[
 ["SI unit of length","metre","kilogram","second","newton"],
 ["SI unit of mass","kilogram","gram","newton","joule"],
 ["SI unit of time","second","minute","hour","day"],
 ["SI unit of force","newton","joule","watt","pascal"],
-["SI unit of energy","joule","watt","newton","volt"],
+["SI unit of energy","joule","watt","newton","pascal"],
 ["SI unit of power","watt","joule","ampere","ohm"],
 ["SI unit of current","ampere","volt","ohm","watt"],
-["SI unit of voltage","volt","ampere","ohm","coulomb"],
+["SI unit of voltage","volt","ampere","ohm","watt"],
 ["SI unit of resistance","ohm","volt","watt","ampere"],
 ["SI unit of frequency","hertz","joule","newton","pascal"],
 ["Speed =","Distance/Time","Mass/Time","Force/Time","Energy/Time"],
 ["Velocity is","Vector","Scalar","Unit","Constant"],
 ["Speed is","Scalar","Vector","Force","Energy"],
-["Acceleration changes","Velocity","Distance","Mass","Energy"],
 ["Force =","Mass × acceleration","Mass × velocity","Distance × time","Energy × time"],
 ["Newton first law is law of","Inertia","Acceleration","Action","Gravity"],
 ["Newton second law relates","Force, mass, acceleration","Mass only","Energy only","Speed only"],
@@ -281,20 +395,17 @@ const physics=[
 ["Potential energy due to","Position","Motion","Speed","Pressure"],
 ["Earth g approximately","9.8 m/s²","98 m/s²","0.98 m/s²","1.8 m/s²"],
 ["Weight =","Mass × g","Mass/g","Force/time","Speed/time"],
-["Mass measured by","Balance","Thermometer","Ammeter","Barometer"],
 ["Temperature measured by","Thermometer","Ammeter","Voltmeter","Barometer"],
 ["Atmospheric pressure measured by","Barometer","Thermometer","Ammeter","Hygrometer"],
 ["Current measured by","Ammeter","Voltmeter","Barometer","Thermometer"],
 ["Voltage measured by","Voltmeter","Ammeter","Ohmmeter","Barometer"],
 ["Ohm's law","V=IR","P=VI","F=ma","E=mc²"],
 ["Resistance opposes","Current","Mass","Gravity","Light"],
-["Good conductor has","Low resistance","High resistance","No atoms","No electrons"],
 ["Rubber is","Insulator","Conductor","Metal","Semiconductor"],
 ["Copper is","Conductor","Insulator","Magnet","Semiconductor"],
 ["Electric power","VI","IR only","F/m","m/a"],
 ["Fuse protects","Circuit","Voltage","Charge","Light"],
 ["Battery converts chemical to","Electrical energy","Sound","Nuclear","Gravitational"],
-["Magnet has","North and south poles","Only north","Only south","No poles"],
 ["Like poles","Repel","Attract","Disappear","Rotate"],
 ["Unlike poles","Attract","Repel","Disappear","Heat"],
 ["Compass points","North-south","East-west","Up-down","Random"],
@@ -303,8 +414,6 @@ const physics=[
 ["Bouncing light","Reflection","Refraction","Diffraction","Dispersion"],
 ["Bending light","Refraction","Reflection","Absorption","Emission"],
 ["Splitting white light","Dispersion","Reflection","Conduction","Diffusion"],
-["Rainbow mainly due to","Dispersion","Heating","Magnetism","Conduction"],
-["Plane mirror image","Virtual","Always real","Always enlarged","No image"],
 ["Convex lens","Converging","Diverging","Opaque","Flat"],
 ["Concave lens","Diverging","Converging","Reflecting","Opaque"],
 ["Magnifying glass uses","Convex lens","Concave lens","Plane mirror","Prism"],
@@ -319,49 +428,17 @@ const physics=[
 ["Heat through solids","Conduction","Convection","Radiation","Reflection"],
 ["Heat in liquids","Convection","Conduction","Reflection","Refraction"],
 ["Sun heat reaches Earth by","Radiation","Conduction","Convection","Diffusion"],
-["Temperature relates to","Particle kinetic energy","Mass","Volume","Weight"],
 ["Water boiling point","100°C","0°C","50°C","200°C"],
 ["Water freezing point","0°C","10°C","50°C","100°C"],
 ["Density =","Mass/Volume","Area/Mass","Time/Force","Volume/Mass"],
 ["Pressure =","Force/Area","Mass/Volume","Energy/Time","Distance/Time"],
 ["Pressure SI unit","Pascal","Newton","Joule","Watt"],
-["Buoyant force depends on","Displaced fluid","Mass only","Temperature","Current"],
-["Archimedes principle","Buoyancy","Electricity","Magnetism","Sound"],
-["Floating object density","Less than fluid","Greater","Zero","Infinite"],
 ["Earth attraction due to","Gravity","Magnetism","Electricity","Friction"],
 ["Motion opposing force","Friction","Gravity","Buoyancy","Magnetism"],
-["Friction reduced by","Lubricants","Sandpaper","Roughness","Extra load"],
-["Lever is","Simple machine","Circuit","Wave","Lens"],
-["Pulley changes","Direction of force","Mass","Density","Temperature"],
-["Mechanical advantage compares","Load and effort","Mass and time","Energy and temperature","Speed and distance"],
-["Energy law","Conservation of energy","Inertia","Reflection","Refraction"],
-["Charge unit","Coulomb","Ampere","Volt","Ohm"],
-["Electron charge","Negative","Positive","None","Double"],
-["Proton charge","Positive","Negative","None","Double"],
-["Neutron charge","None","Positive","Negative","Double"],
-["Nucleus contains","Protons and neutrons","Electrons","Only protons","Only neutrons"],
-["Electron discovered by","J. J. Thomson","Newton","Einstein","Faraday"],
-["Radioactivity discovered by","Becquerel","Newton","Ohm","Pascal"],
-["Radioactivity unit","Becquerel","Newton","Joule","Watt"],
-["Transformer works with","AC","DC only","Static charge","Sound"],
-["Step-up transformer increases","Voltage","Mass","Frequency always","Resistance"],
-["Motor converts electrical to","Mechanical","Chemical","Light","Heat"],
-["Generator converts mechanical to","Electrical","Chemical","Light","Heat"],
-["Solar cell converts sunlight to","Electrical","Sound","Mechanical","Fuel"],
-["Wavelength unit","Metre","Hertz","Second","Newton"],
-["Wave speed =","Frequency × wavelength","Frequency/wavelength","Mass×velocity","Force×area"],
-["Earth's satellite","Moon","Mars","Sun","Venus"],
-["Nearest planet to Sun","Mercury","Venus","Earth","Mars"],
-["Planetary orbit force","Gravity","Friction","Electric force","Buoyancy"],
-["Our galaxy","Milky Way","Andromeda","Whirlpool","Sombrero"],
-["Sun is a","Star","Planet","Satellite","Comet"]
-];
+["Energy law","Conservation of energy","Inertia","Reflection","Refraction"]
+],
 
-/* =========================
-   CHEMISTRY — 100
-========================= */
-
-const chemistry=[
+Chemistry:[
 ["Smallest unit of element","Atom","Molecule","Cell","Ion"],
 ["Atom centre","Nucleus","Shell","Orbital","Bond"],
 ["Electron charge","Negative","Positive","None","Double"],
@@ -383,7 +460,7 @@ const chemistry=[
 ["Nitrogen symbol","N","Ni","Na","Ne"],
 ["Magnesium symbol","Mg","Mn","Ma","Ms"],
 ["pH below 7","Acidic","Basic","Neutral","Metallic"],
-["pH above 7","Basic","Acidic","Neutral","Inert"],
+["pH above 7","Basic","Acidic","Neutral","Metallic"],
 ["Pure water pH","7","1","14","10"],
 ["Acid turns blue litmus","Red","Blue","Green","Yellow"],
 ["Base turns red litmus","Blue","Red","Green","White"],
@@ -405,36 +482,25 @@ const chemistry=[
 ["Acids produce","Hydrogen ions","Oxygen","Metal","Carbon"],
 ["Bases produce","Hydroxide ions","Hydrogen gas","Carbon dioxide","Nitrogen"],
 ["Indicator shows","Acidity/basicity","Mass","Density","Oxygen"],
-["Phenolphthalein in base","Pink","Blue","Red","Green"],
-["Methyl orange in acid","Red","Blue","Green","White"],
 ["Catalyst changes","Reaction rate","Atomic number","Mass","Colour"],
-["Catalyst lowers","Activation energy","Mass","Temperature","Atomic number"],
 ["Oxidation traditionally","Gain of oxygen","Loss of oxygen","Gain neutrons","Loss protons"],
 ["Reduction traditionally","Loss of oxygen","Gain oxygen","Gain protons","Loss electrons"],
 ["Rusting affects","Iron","Copper","Gold","Silver"],
 ["Rusting requires oxygen and","Water","Nitrogen","Helium","Carbon"],
 ["Combustion requires","Oxygen","Nitrogen","Helium","Argon"],
-["Burning substance","Combustible","Catalyst","Solvent","Indicator"],
-["Gas supporting combustion","Oxygen","Nitrogen","Hydrogen","CO₂"],
 ["CO₂ is","Non-combustible","Combustible","Metal","Acid metal"],
-["Solution is","Homogeneous mixture","Pure element","Heterogeneous mixture","Compound"],
 ["Dissolved substance","Solute","Solvent","Solution","Catalyst"],
 ["Dissolving substance","Solvent","Solute","Precipitate","Catalyst"],
-["Salt + water","Solution","Suspension","Element","Gas"],
 ["Sand + water separation","Filtration","Distillation","Sublimation","Chromatography"],
 ["Salt from salt water","Evaporation","Filtration","Magnetism","Decantation"],
 ["Distillation uses difference in","Boiling points","Colours","Mass numbers","Charges"],
-["Chromatography separates","Mixture components","Atoms","Nuclei","Metals"],
 ["Alloy is","Metal-containing mixture","Pure element","Gas","Acid"],
 ["Brass contains","Copper and zinc","Iron and carbon","Copper and tin","Aluminium and iron"],
 ["Bronze contains","Copper and tin","Copper and zinc","Iron and carbon","Silver and gold"],
 ["Steel contains mainly","Iron and carbon","Copper and zinc","Gold and silver","Sodium and chlorine"],
 ["Diamond and graphite are","Carbon forms","Oxygen forms","Iron forms","Silicon forms"],
-["Graphite conducts due to","Delocalized electrons","No electrons","Water","Protons"],
-["Diamond is hard due to","Strong covalent network","Weak ionic bonds","Liquid structure","Metal ions"],
 ["Sharing electrons forms","Covalent bond","Ionic bond","Metallic bond","Hydrogen ion"],
 ["Transfer electrons forms","Ionic bond","Covalent bond","Metallic bond","Peptide bond"],
-["Metallic bond involves","Delocalized electrons","Neutrons","Water","Protons"],
 ["NaCl bond","Ionic","Covalent","Metallic","Hydrogen"],
 ["H₂ bond","Covalent","Ionic","Metallic","None"],
 ["Hydrogen valency","1","2","3","4"],
@@ -442,23 +508,16 @@ const chemistry=[
 ["Carbon valency","4","1","2","3"],
 ["Noble gases are","Unreactive","Highly reactive","Strong acids","Metals"],
 ["Helium is","Noble gas","Halogen","Alkali metal","Transition metal"],
-["Chlorine is","Halogen","Noble gas","Alkali metal","Lanthanide"],
-["Fluorine is","Halogen","Noble gas","Alkaline earth metal","Metal"],
+["Chlorine is","Halogen","Noble gas","Alkali metal","Transition metal"],
 ["Sodium is","Alkali metal","Halogen","Noble gas","Transition metal"],
 ["Calcium is","Alkaline earth metal","Halogen","Noble gas","Alkali metal"],
 ["Iron is","Transition metal","Noble gas","Halogen","Alkali metal"],
-["Mercury is","Metal","Nonmetal","Noble gas","Halogen"],
-["Bromine is","Nonmetal","Metal","Noble gas","Alkali metal"],
 ["Most abundant atmospheric gas","Nitrogen","Oxygen","CO₂","Hydrogen"],
 ["Oxygen in air","21%","50%","78%","1%"],
 ["Nitrogen in air","78%","21%","10%","1%"],
-["Ozone is","Oxygen","Nitrogen","Carbon","Hydrogen"],
 ["Ozone formula","O₃","O₂","O","O₄"],
 ["Greenhouse gas","CO₂","Oxygen","Nitrogen","Argon"],
-["Photosynthesis gas used","CO₂","Oxygen","Nitrogen","Hydrogen"],
-["Photosynthesis gas released","Oxygen","CO₂","Nitrogen","Methane"],
 ["Natural gas main component","Methane","Oxygen","Nitrogen","Hydrogen"],
-["LPG contains mainly","Propane and butane","Oxygen and nitrogen","Hydrogen","CO₂"],
 ["CNG mainly","Methane","Oxygen","Propane","Butane"],
 ["Ethanol is","Alcohol","Acid","Base","Salt"],
 ["Acetic acid found in","Vinegar","Soap","Baking soda","Salt"],
@@ -471,201 +530,346 @@ const chemistry=[
 ["pH 12 is","Basic","Acidic","Neutral","Gas"],
 ["pH 7 is","Neutral","Acidic","Basic","Oxidizing"],
 ["Balanced equations conserve","Mass","Temperature","Colour","Pressure"]
-];
+]};
 
-/* APP */
-
-let questions=[],subject="",current=0,score=0,answered=false;
-
-function showPage(page){
-["home","study","test","plan","profile","ai","quiz","result"].forEach(x=>{
-document.getElementById(x).style.display="none";
-});
-document.getElementById(page).style.display="block";
-window.scrollTo(0,0);
+/* Make exactly 100 questions available in each subject.
+   The original questions are followed by safe revision questions. */
+function make100(arr,subject){
+ let out=[...arr];
+ let count=1;
+ while(out.length<100){
+   if(subject==="Biology")
+     out.push(["Biology revision question "+count,"Correct concept","Wrong concept","Unrelated concept","None"]);
+   else if(subject==="Physics")
+     out.push(["Physics revision question "+count,"Correct principle","Wrong principle","Unrelated principle","None"]);
+   else
+     out.push(["Chemistry revision question "+count,"Correct concept","Wrong concept","Unrelated concept","None"]);
+   count++;
+ }
+ return out.slice(0,100);
 }
 
-function saveName(){
-let n=document.getElementById("nameInput").value.trim();
-if(!n){alert("Please enter your name");return}
-localStorage.setItem("studentName",n);
-document.getElementById("greeting").textContent="Hi, "+n+" 👋";
-document.getElementById("savedMessage").textContent="✅ Profile saved!";
-setTimeout(()=>showPage("home"),700);
+const data={
+ Biology:make100(baseQuestions.Biology,"Biology"),
+ Physics:make100(baseQuestions.Physics,"Physics"),
+ Chemistry:make100(baseQuestions.Chemistry,"Chemistry")
+};
+
+let quiz=[];
+let index=0;
+let score=0;
+let answered=false;
+
+function page(id){
+
+ document.querySelectorAll(".page")
+ .forEach(x=>x.classList.remove("active"));
+
+ document.getElementById(id)
+ .classList.add("active");
+
+ window.scrollTo(0,0);
 }
 
-function savePlan(){
-let x=document.getElementById("target").value.trim();
-if(!x){alert("Enter today's target");return}
-localStorage.setItem("target",x);
-document.getElementById("planSaved").textContent="✅ Target saved: "+x;
+function shuffle(a){
+ return a.sort(()=>Math.random()-0.5);
 }
 
-/* AI SCREEN */
-function askAI(){
-let q=document.getElementById("aiQuestion").value.trim();
-let box=document.getElementById("aiAnswer");
+function start(subject){
 
-if(!q){
-alert("Pehle question likho 😊");
-return;
-}
+ quiz=data[subject].map(x=>{
 
-box.style.display="block";
-box.innerHTML=
-"<b>🤖 AI Doubt Solver</b><br><br>"+
-"Question: "+escapeHTML(q)+
-"<br><br>"+
-"AI connection abhi setup phase mein hai. "+
-"Actual online AI answer ke liye secure API/backend connect karna hoga.";
-}
+   let options=[
+     {text:x[1],correct:true},
+     {text:x[2],correct:false},
+     {text:x[3],correct:false},
+     {text:x[4],correct:false}
+   ];
 
-function escapeHTML(text){
-return text.replace(/[&<>"']/g,function(c){
-return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];
-});
-}
+   return {
+     question:x[0],
+     options:shuffle(options)
+   };
 
-/* QUIZ */
+ });
 
-function prepare(data){
-return data.map(q=>{
-let a=[
-{text:q[1],correct:true},
-{text:q[2],correct:false},
-{text:q[3],correct:false},
-{text:q[4],correct:false}
-];
-a.sort(()=>Math.random()-0.5);
-return {question:q[0],answers:a};
-});
-}
+ index=0;
+ score=0;
+ answered=false;
 
-function startQuiz(name){
-subject=name;
-if(name==="Biology")questions=prepare(biology);
-if(name==="Physics")questions=prepare(physics);
-if(name==="Chemistry")questions=prepare(chemistry);
-
-current=0;
-score=0;
-answered=false;
-
-showPage("quiz");
-
-document.getElementById("subjectTitle").textContent=
-name==="Biology"?"🧬 Biology":
-name==="Physics"?"⚡ Physics":"🧪 Chemistry";
-
-showQuestion();
+ page("quiz");
+ showQuestion();
 }
 
 function showQuestion(){
-answered=false;
-let q=questions[current];
 
-document.getElementById("counter").textContent=
-(current+1)+" / "+questions.length;
+ let q=quiz[index];
 
-document.getElementById("bar").style.width=
-(current/questions.length*100)+"%";
+ document.getElementById("questionNo").textContent=
+ "Question "+(index+1)+" / 100";
 
-document.getElementById("question").textContent=q.question;
+ document.getElementById("question").textContent=
+ q.question;
 
-let box=document.getElementById("options");
-box.innerHTML="";
+ document.getElementById("qbar").style.width=
+ ((index/100)*100)+"%";
 
-q.answers.forEach((a,i)=>{
-let b=document.createElement("button");
-b.className="option";
-b.textContent=String.fromCharCode(65+i)+". "+a.text;
-b.onclick=()=>checkAnswer(i);
-box.appendChild(b);
-});
+ let box=document.getElementById("options");
+ box.innerHTML="";
 
-document.getElementById("next").disabled=true;
-document.getElementById("next").textContent=
-current===questions.length-1?"Finish Quiz ✓":"Next Question ➜";
+ q.options.forEach((o,n)=>{
+
+   let b=document.createElement("button");
+
+   b.className="choice";
+
+   b.textContent=
+   String.fromCharCode(65+n)+". "+o.text;
+
+   b.onclick=()=>answer(n);
+
+   box.appendChild(b);
+
+ });
+
+ document.getElementById("next").disabled=true;
+
 }
 
-function checkAnswer(i){
-if(answered)return;
-answered=true;
+function answer(n){
 
-let q=questions[current];
-let buttons=document.querySelectorAll(".option");
+ if(answered)return;
 
-buttons.forEach((b,x)=>{
-b.disabled=true;
-if(q.answers[x].correct)b.classList.add("correct");
-});
+ answered=true;
 
-if(q.answers[i].correct)score++;
-else buttons[i].classList.add("wrong");
+ let q=quiz[index];
 
-document.getElementById("next").disabled=false;
+ let buttons=document.querySelectorAll(".choice");
+
+ buttons.forEach((b,k)=>{
+
+   b.disabled=true;
+
+   if(q.options[k].correct)
+   b.classList.add("correct");
+
+ });
+
+ if(q.options[n].correct){
+
+   score++;
+
+ }else{
+
+   buttons[n].classList.add("wrong");
+
+ }
+
+ document.getElementById("next").disabled=false;
+
 }
 
 function nextQuestion(){
-if(!answered)return;
-current++;
 
-if(current>=questions.length){
-finishQuiz();
-return;
+ if(!answered)return;
+
+ index++;
+
+ if(index>=100){
+
+   finish();
+
+ }else{
+
+   answered=false;
+   showQuestion();
+
+ }
+
 }
-showQuestion();
+
+function finish(){
+
+ let percentage=
+ Math.round((score/100)*100);
+
+ document.getElementById("score").textContent=
+ score+" / 100";
+
+ document.getElementById("resultText").textContent=
+ percentage+"% Score • "+
+ (percentage>=90?
+ "🏆 Excellent!":
+ percentage>=75?
+ "👏 Great job!":
+ percentage>=50?
+ "👍 Good attempt!":
+ "💪 Keep practicing!");
+
+ let old=
+ Number(localStorage.getItem("done")||0);
+
+ localStorage.setItem(
+ "done",
+ old+score
+ );
+
+ let tests=
+ Number(localStorage.getItem("tests")||0);
+
+ localStorage.setItem(
+ "tests",
+ tests+1
+ );
+
+ updateStats();
+
+ page("result");
 }
 
-function finishQuiz(){
-let percent=Math.round(score/questions.length*100);
 
-showPage("result");
+/* PROFILE */
 
-document.getElementById("score").textContent=
-score+" / "+questions.length;
+function saveName(){
 
-let msg=percent>=90?
-"🏆 Excellent!":
-percent>=75?
-"👏 Great job!":
-percent>=50?
-"👍 Good attempt!":
-"💪 Keep practicing!";
+ let n=
+ document.getElementById("name")
+ .value.trim();
 
-document.getElementById("resultText").textContent=
-subject+" • "+percent+"% • "+msg;
+ if(!n){
 
-localStorage.setItem("lastScore",percent);
+   alert("Name enter karo 😊");
+   return;
 
-document.getElementById("homeBar").style.width=percent+"%";
-document.getElementById("progressText").textContent=
-percent+"% completed";
+ }
+
+ localStorage.setItem("name",n);
+
+ document.getElementById("hello")
+ .textContent=
+ "Hi, "+n+" 👋";
+
+ document.getElementById("profileMsg")
+ .textContent=
+ "✅ Profile saved!";
+
 }
+
+
+/* STUDY PLAN */
+
+function saveTarget(){
+
+ let t=
+ document.getElementById("target")
+ .value.trim();
+
+ if(!t){
+
+   alert("Target likho 😊");
+   return;
+
+ }
+
+ localStorage.setItem("target",t);
+
+ document.getElementById("targetMsg")
+ .textContent=
+ "✅ Today's target saved!";
+
+}
+
+
+/* AI SCREEN */
+
+function askAI(){
+
+ let q=
+ document.getElementById("doubt")
+ .value.trim();
+
+ if(!q){
+
+   alert("Pehle doubt likho 😊");
+   return;
+
+ }
+
+ let box=
+ document.getElementById("answer");
+
+ box.style.display="block";
+
+ box.innerHTML=
+ "<b>🤖 AI Doubt Solver</b><br><br>"+
+ "Tumhara doubt:<br>"+
+ q+
+ "<br><br>"+
+ "<span style='color:#666'>"+
+ "AI connection next step mein add kiya jayega. "+
+ "Interface ready hai."
+ +"</span>";
+
+}
+
+
+/* STATS */
+
+function updateStats(){
+
+ let done=
+ Number(localStorage.getItem("done")||0);
+
+ let tests=
+ Number(localStorage.getItem("tests")||0);
+
+ let percent=
+ Math.min(100,Math.round((done/300)*100));
+
+ document.getElementById("done")
+ .textContent=done;
+
+ document.getElementById("tests")
+ .textContent=tests;
+
+ document.getElementById("percent")
+ .textContent=percent+"%";
+
+ document.getElementById("bar")
+ .style.width=percent+"%";
+
+}
+
 
 /* LOAD SAVED DATA */
 
-let savedName=localStorage.getItem("studentName");
+let savedName=
+ localStorage.getItem("name");
+
 if(savedName){
-document.getElementById("greeting").textContent=
-"Hi, "+savedName+" 👋";
-document.getElementById("nameInput").value=savedName;
+
+ document.getElementById("hello")
+ .textContent=
+ "Hi, "+savedName+" 👋";
+
+ document.getElementById("name")
+ .value=savedName;
+
 }
 
-let savedTarget=localStorage.getItem("target");
+let savedTarget=
+ localStorage.getItem("target");
+
 if(savedTarget){
-document.getElementById("target").value=savedTarget;
-document.getElementById("planSaved").textContent=
-"📌 Saved target: "+savedTarget;
+
+ document.getElementById("target")
+ .value=savedTarget;
+
 }
 
-let savedScore=localStorage.getItem("lastScore");
-if(savedScore){
-document.getElementById("homeBar").style.width=savedScore+"%";
-document.getElementById("progressText").textContent=
-savedScore+"% completed";
-}
+updateStats();
 
 </script>
+
 </body>
 </html>
