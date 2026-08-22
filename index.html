@@ -169,42 +169,39 @@ x[1].forEach((option,index)=>{
       score++;
       b.style.background='#d1fae5';
     }else{
-      b.style.background='#fee2e2';
-    }
-  };
-  ans.appendChild(b);
-});
 function show(id,btn){
   document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-if(id==='test') start();
-  
+
+  if(btn){
+    btn.classList.add('active');
+  }
+
+  if(id==='test') start();
 }
+
 function next(){
   if(!answered)return alert('Pehle answer select karo!');
   i++;
   render();
 }
+
 function save(){
   let n=document.getElementById("name").value.trim();
+
   if(n){
     localStorage.setItem("name",n);
     document.getElementById("hello").textContent=`Hi, ${n} 👋`;
     alert("Profile saved!");
   }
 }
+
 if(localStorage.getItem("name")){
   document.getElementById("hello").textContent=`Hi, ${localStorage.getItem("name")} 👋`;
   document.getElementById("name").value=localStorage.getItem("name");
-} // Home cards ko working banana
-let cards = document.querySelectorAll('#home .card');
-let nav = document.querySelectorAll('nav button');
-
-if(cards[0]) cards[0].onclick = () => show('study', nav[1]);
-if(cards[1]) cards[1].onclick = () => show('test', nav[2]);
+}
 if(cards[3]) cards[3].onclick = () => show('plan', nav[3]);
 let cards = document.querySelectorAll('#home .card');
 let nav = document.querySelectorAll('nav button');
