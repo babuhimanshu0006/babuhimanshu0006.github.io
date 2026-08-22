@@ -143,7 +143,7 @@ function render(){
   if(i>=order.length){
     document.getElementById('qno').textContent='Test Complete!';
     document.getElementById('q').textContent='🎉 Excellent! Performance: '+score+'/'+order.length;
-    document.getElementById('ans').innerHTML='<p>Accuracy: '+Math.round(score/order.length*100)+'%</p><button onclick="start()">Try Again</button>';
+    document.getElementById('ans').innerHTML='<p>Accuracy: '+Math.round(score/order.length*100)+'%</p>';
     return;
   }
 
