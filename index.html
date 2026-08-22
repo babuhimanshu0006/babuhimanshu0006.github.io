@@ -1,242 +1,678 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#163b78"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><title>PadhaiHub</title><style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}header{background:linear-gradient(135deg,#163b78,#1673df);color:#fff;padding:25px 18px;border-radius:0 0 28px 28px}.wrap{max-width:850px;margin:auto;padding:0 16px}.brand{display:flex;gap:12px;align-items:center}.logo{width:52px}.brand b{font-size:25px}.brand small{display:block}h1{font-size:26px;margin:22px 0 5px}.card{background:#fff;border-radius:17px;padding:18px;margin:12px 0;box-shadow:0 4px 18px #0000000c}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.icon{font-size:27px}.progress{height:10px;background:#e6eaf1;border-radius:10px}.bar{height:100%;width:62%;background:#1673df;border-radius:10px}section{padding:18px 0 80px}.hidden{display:none}nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:flex;justify-content:space-around;padding:7px;z-index:5}nav button{border:0;background:none;padding:7px;color:#667}nav .active{color:#1673df;font-weight:bold}.subject{cursor:pointer}.chapter{display:none}.open .chapter{display:block}.chapter button,.option{display:block;width:100%;text-align:left;padding:12px;margin:6px 0;border:1px solid #dce2ec;border-radius:11px;background:#fafbfe}.selected{background:#eaf4ff!important;border-color:#1673df!important}.btn{background:#163b78;color:white;border:0;border-radius:11px;padding:12px 18px;font-weight:bold}input{width:100%;padding:12px;border:1px solid #ccd4e2;border-radius:11px;margin:7px 0}@media(min-width:650px){.grid{grid-template-columns:repeat(4,1fr)}} 
-</style></head><body><header><div class="wrap"><div class="brand"><img class="logo" src="icon.svg"><div><b>PadhaiHub</b><small>Ek App, Saari Padhai 🚀</small></div></div><h1 id="hello">Hi, Student 👋</h1><span>Aaj ka target complete karo.</span></div></header><main class="wrap">
-<section id="home"><div class="card"><b>Overall Progress</b><p>62% syllabus completed</p><div class="progress"><div class="bar"></div></div></div><div class="grid"><div class="card"><div class="icon">📚</div><b>Notes & PDFs</b></div><div class="card" onclick="show('test',document.querySelectorAll('nav button')[2])"><div class="icon">📝</div><b>Mock Tests</b></div><div class="card"><div class="icon">🤖</div><b>AI Doubt Solver</b><small>Coming soon</small></div><div class="card" onclick="show('plan')"><div class="icon">⏰</div><b>Study Planner</b></div></div></section>
-<section id="study" class="hidden"><h2>Subjects</h2><div class="card subject" onclick="this.classList.toggle('open')"><h3>🧬 Biology</h3><div class="chapter"><button onclick="note('Basic Biology')">Basic Biology</button><button onclick="note('Sexual Reproduction')">Sexual Reproduction</button><button onclick="note('Human Reproduction')">Human Reproduction</button><button onclick="note('Reproductive Health')">Reproductive Health</button></div></div><div class="card subject" onclick="this.classList.toggle('open')"><h3>⚛️ Physics</h3><div class="chapter"><button onclick="note('Kinematics')">Kinematics</button><button onclick="note('Laws of Motion')">Laws of Motion</button></div></div><div class="card subject" onclick="this.classList.toggle('open')"><h3>🧪 Chemistry</h3><div class="chapter"><button onclick="note('Atomic Structure')">Atomic Structure</button><button onclick="note('Chemical Bonding')">Chemical Bonding</button></div></div></section>
-<section id="notes" class="hidden"><div class="card"><h2 id="nt">Chapter</h2><p>Yahan real notes/PDF content connect kiya ja sakta hai. Ye abhi demo screen hai.</p><button class="btn" onclick="show('test')">Practice MCQs</button></div></section>
-<section id="ai" class="hidden">
-<div class="card">
-<h2>🤖 AI Doubt Solver</h2>
-<p>Apna doubt yahan likho:</p>
-<input id="doubt" placeholder="Type your doubt...">
-<button onclick="solveDoubt()">Ask AI</button>
-<div id="aiAnswer"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Science Quiz - 300 MCQs</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  min-height:100vh;
+  color:#222;
+}
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+}
+.card{
+  background:white;
+  border-radius:22px;
+  padding:22px;
+  margin-top:20px;
+  box-shadow:0 10px 30px #0003;
+}
+h1{text-align:center;margin:5px 0 10px}
+h2{margin-top:0}
+.subtitle{text-align:center;color:#666}
+.subjects{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:15px;
+  margin-top:25px;
+}
+.subject{
+  border:0;
+  border-radius:16px;
+  padding:20px;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+  background:#f1f3ff;
+}
+.subject:hover{transform:scale(1.02)}
+.bio{border-left:7px solid #20a464}
+.physics{border-left:7px solid #3976ff}
+.chem{border-left:7px solid #ff6b35}
+button{
+  font-family:inherit;
+}
+#quiz{display:none}
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.progress{
+  height:10px;
+  background:#ddd;
+  border-radius:20px;
+  overflow:hidden;
+  margin:15px 0;
+}
+#bar{
+  height:100%;
+  width:0%;
+  background:#667eea;
+  transition:.3s;
+}
+.option{
+  display:block;
+  width:100%;
+  text-align:left;
+  border:2px solid #ddd;
+  background:white;
+  padding:15px;
+  margin:10px 0;
+  border-radius:12px;
+  font-size:16px;
+  cursor:pointer;
+}
+.option:hover{background:#f3f4ff}
+.option.correct{background:#c8f7d5;border-color:#19a653}
+.option.wrong{background:#ffd0d0;border-color:#e33}
+.option:disabled{cursor:default}
+#next,#restart{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:12px;
+  background:#667eea;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  margin-top:15px;
+  cursor:pointer;
+}
+#next:disabled{opacity:.5}
+#result{
+  display:none;
+  text-align:center;
+}
+.score{
+  font-size:42px;
+  font-weight:bold;
+  margin:20px;
+}
+.small{
+  color:#777;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card" id="home">
+  <h1>🧠 Science Quiz</h1>
+  <p class="subtitle">300 MCQs • Biology • Physics • Chemistry</p>
+
+  <div class="subjects">
+    <button class="subject bio" onclick="startQuiz('Biology')">
+      🧬 Biology<br>
+      <span class="small">100 Questions</span>
+    </button>
+
+    <button class="subject physics" onclick="startQuiz('Physics')">
+      ⚡ Physics<br>
+      <span class="small">100 Questions</span>
+    </button>
+
+    <button class="subject chem" onclick="startQuiz('Chemistry')">
+      🧪 Chemistry<br>
+      <span class="small">100 Questions</span>
+    </button>
+  </div>
 </div>
-</section>
-  <section id="test" class="hidden"><div class="card"><p id="qno"></p><h2 id="q"></h2><div id="ans"></div><button class="btn" onclick="next()">Next</button></div></section><section id="result" class="hidden"><div class="card" style="text-align:center"><div style="font-size:60px">🏆</div><h2>Test Complete!</h2><div id="score" style="font-size:42px;font-weight:bold"></div><p id="acc"></p><button class="btn" onclick="start()">Try Again</button></div></section>
-<section id="plan" class="hidden"><h2>Study Planner</h2><div class="card">✅ Biology — 7:00 PM • 60 min</div><div class="card">○ Chemistry — 8:15 PM • 60 min</div><div class="card">○ Physics — 9:30 PM • 45 min</div></section><section id="profile" class="hidden"><div class="card"><h2>Profile</h2><input id="name" placeholder="Your name"><button class="btn" onclick="save()">Save Profile</button></div></section></main>
-<nav><button class="active" onclick="show('home',this)">🏠<br>Home</button><button onclick="show('study',this)">📚<br>Study</button><button onclick="show('test',this)">📝<br>Test</button><button onclick="show('plan',this)">⏰<br>Plan</button><button onclick="show('profile',this)">👤<br>Profile</button></nav>
+
+<div class="card" id="quiz">
+
+  <div class="top">
+    <h2 id="subjectTitle"></h2>
+    <b id="counter"></b>
+  </div>
+
+  <div class="progress">
+    <div id="bar"></div>
+  </div>
+
+  <h2 id="question"></h2>
+
+  <div id="options"></div>
+
+  <button id="next" onclick="nextQuestion()" disabled>
+    Next Question ➜
+  </button>
+
+</div>
+
+<div class="card" id="result">
+  <h1>🎉 Quiz Complete!</h1>
+  <div class="score" id="score"></div>
+  <p id="resultText"></p>
+
+  <button id="restart" onclick="goHome()">
+    🔄 Choose Another Subject
+  </button>
+</div>
+
+</div>
+
 <script>
-const qs = [ 
-  
-["Powerhouse of the cell?",["Nucleus","Mitochondria","Ribosome","Golgi body"],1],
-["DNA stands for?",["Deoxyribonucleic Acid","Dynamic Nuclear Acid","Double Nitrogen Acid","None"],0],
-["Human heart has how many chambers?",["2","3","4","5"],2],
-["Basic unit of life?",["Tissue","Cell","Organ","Atom"],1],
-["Which organelle is called the control center of the cell?",["Mitochondria","Nucleus","Ribosome","Vacuole"],1],
-["Which gas do humans breathe in?",["Carbon dioxide","Oxygen","Nitrogen","Hydrogen"],1],
-["Which organ pumps blood?",["Liver","Heart","Kidney","Lung"],1],
-["Largest organ of the human body?",["Heart","Liver","Skin","Brain"],2],
-["How many bones are in an adult human body?",["106","206","306","406"],1],
-["Which blood cells fight infection?",["Red blood cells","White blood cells","Platelets","Plasma"],1],
-["Which blood cells carry oxygen?",["White blood cells","Red blood cells","Platelets","Plasma"],1],
-["Which vitamin is produced in skin by sunlight?",["Vitamin A","Vitamin B","Vitamin C","Vitamin D"],3],
-["Which organ helps us breathe?",["Kidney","Lung","Liver","Stomach"],1],
-["Which organ filters blood?",["Heart","Kidney","Lung","Stomach"],1],
-["Which part of plant absorbs water?",["Flower","Root","Fruit","Leaf"],1],
-["Which part of plant performs photosynthesis?",["Root","Stem","Leaf","Flower"],2],
-["Green pigment in plants is called?",["Hemoglobin","Chlorophyll","Melanin","Keratin"],1],
-["Plants take in which gas during photosynthesis?",["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"],1],
-["What is the male reproductive cell?",["Ovum","Sperm","Zygote","Embryo"],1],
-["What is the female reproductive cell?",["Sperm","Ovum","Zygote","Embryo"],1],
-["Fusion of sperm and ovum is called?",["Pollination","Fertilization","Respiration","Digestion"],1],
-["The fertilized egg is called?",["Embryo","Zygote","Fetus","Ovum"],1],
-["Which organ produces sperm?",["Ovary","Testis","Uterus","Kidney"],1],
-["Which organ produces ova?",["Testis","Ovary","Uterus","Liver"],1],
-["Where does the embryo develop?",["Stomach","Uterus","Lung","Kidney"],1],
-["Which hormone is mainly responsible for male secondary sexual characters?",["Estrogen","Testosterone","Insulin","Thyroxine"],1],
-["Which hormone is mainly associated with female secondary sexual characters?",["Testosterone","Estrogen","Insulin","Adrenaline"],1],
-["Which gland produces insulin?",["Thyroid","Pancreas","Pituitary","Adrenal"],1],
-["Which hormone controls blood sugar?",["Insulin","Estrogen","Testosterone","Thyroxine"],0],
-["Which organ produces bile?",["Stomach","Liver","Kidney","Pancreas"],1],
-["Where does digestion of food begin?",["Stomach","Mouth","Small intestine","Large intestine"],1],
-["Which enzyme is present in saliva?",["Pepsin","Amylase","Trypsin","Lipase"],1],
-["Most absorption of digested food occurs in?",["Stomach","Small intestine","Large intestine","Mouth"],1],
-["Which organ stores bile?",["Pancreas","Gall bladder","Kidney","Stomach"],1],
-["Which system transports blood?",["Digestive system","Circulatory system","Respiratory system","Nervous system"],1],
-["Which system controls body activities?",["Digestive system","Nervous system","Skeletal system","Excretory system"],1],
-["Which is the main organ of nervous system?",["Heart","Brain","Liver","Kidney"],1],
-["Which part of brain controls balance?",["Cerebrum","Cerebellum","Medulla","Spinal cord"],1],
-["Which part of brain controls breathing?",["Cerebellum","Medulla","Cerebrum","Hypothalamus"],1],
-["Which tissue connects muscle to bone?",["Ligament","Tendon","Cartilage","Blood"],1],
-["Which tissue connects bone to bone?",["Tendon","Ligament","Muscle","Blood"],1],
-["Which mineral is important for strong bones?",["Iron","Calcium","Sodium","Iodine"],1],
-["Deficiency of iron causes?",["Rickets","Anaemia","Scurvy","Goitre"],1],
-["Deficiency of vitamin C causes?",["Scurvy","Rickets","Beriberi","Goitre"],0],
-["Deficiency of vitamin D causes?",["Scurvy","Rickets","Anaemia","Night blindness"],1],
-["Deficiency of iodine causes?",["Goitre","Scurvy","Rickets","Anaemia"],0],
-["Which vitamin helps blood clotting?",["Vitamin A","Vitamin C","Vitamin K","Vitamin D"],2],
-["Which organ removes urea from blood?",["Heart","Kidney","Lung","Stomach"],1],
-["The functional unit of kidney is?",["Neuron","Nephron","Alveolus","Villus"],1],
-["Which organ removes carbon dioxide?",["Kidney","Lung","Liver","Heart"],1],
-["Exchange of gases in lungs occurs in?",["Nephrons","Alveoli","Villi","Bronchi"],1],
-["Which gas is released during respiration?",["Oxygen","Carbon dioxide","Hydrogen","Nitrogen"],1],
-["Energy currency of the cell is?",["DNA","ATP","RNA","ADP"],1],
-["RNA stands for?",["Ribonucleic Acid","Rapid Nuclear Acid","Ribose Nitrogen Acid","None"],0],
-["DNA is mainly found in?",["Nucleus","Cell wall","Vacuole","Cytoplasm only"],0],
-["Unit of heredity is?",["Gene","Cell","Tissue","Organ"],0],
-["Father of genetics?",["Charles Darwin","Gregor Mendel","Robert Hooke","Louis Pasteur"],1],
-["Study of heredity is called?",["Ecology","Genetics","Anatomy","Physiology"],1],
-["Chromosomes are present in?",["Nucleus","Cell wall","Vacuole","Ribosome"],0],
-["How many pairs of chromosomes do humans have?",["22","23","24","46"],1],
-["Normal human body temperature is about?",["27°C","37°C","47°C","57°C"],1],
-["Which disease is caused by a virus?",["Malaria","Common cold","Typhoid","Cholera"],1],
-["Malaria is caused by?",["Plasmodium","Bacteria","Virus","Fungus"],0],
-["Malaria is spread by?",["Housefly","Female Anopheles mosquito","Cockroach","Rat"],1],
-["Tuberculosis mainly affects?",["Lungs","Bones only","Skin only","Eyes"],0],
-["Which microorganism is used to make bread?",["Yeast","Algae","Virus","Protozoa"],0],
-["Curd is formed with the help of?",["Lactobacillus","Plasmodium","Yeast only","Virus"],0],
+
+/* =========================
+   BIOLOGY - 100 QUESTIONS
+========================= */
+
+const biology = [
+
+["The basic unit of life is:",["Cell","Tissue","Organ","Atom"],0],
+["Which organelle is called the powerhouse of the cell?",["Nucleus","Mitochondria","Ribosome","Golgi body"],1],
+["Which molecule carries genetic information?",["DNA","Glucose","ATP","Lipid"],0],
+["The green pigment in plants is:",["Hemoglobin","Chlorophyll","Melanin","Keratin"],1],
+["Photosynthesis mainly occurs in:",["Mitochondria","Chloroplasts","Ribosomes","Nucleus"],1],
+["Which gas is released during photosynthesis?",["Carbon dioxide","Nitrogen","Oxygen","Hydrogen"],2],
+["Which gas is used during photosynthesis?",["Oxygen","Carbon dioxide","Hydrogen","Nitrogen"],1],
+["The process by which plants lose water vapour is:",["Respiration","Transpiration","Digestion","Excretion"],1],
+["Human blood is pumped by the:",["Liver","Lung","Heart","Kidney"],2],
+["The largest organ of the human body is:",["Liver","Skin","Heart","Brain"],1],
+["Which organ filters blood?",["Lungs","Kidneys","Stomach","Pancreas"],1],
+["The functional unit of kidney is:",["Neuron","Nephron","Alveolus","Villus"],1],
+["The functional unit of nervous system is:",["Neuron","Nephron","Cellulose","Platelet"],0],
+["Which part of brain controls balance?",["Cerebrum","Cerebellum","Medulla","Hypothalamus"],1],
+["Which part controls breathing and heartbeat?",["Medulla oblongata","Cerebellum","Cerebrum","Retina"],0],
+["Red blood cells contain:",["Insulin","Hemoglobin","Bile","Keratin"],1],
+["White blood cells mainly help in:",["Digestion","Defense","Movement","Clotting"],1],
+["Platelets help in:",["Blood clotting","Digestion","Breathing","Vision"],0],
+["The liquid part of blood is:",["Plasma","Lymph","Bile","Serum"],0],
+["Which blood cells carry oxygen?",["RBCs","WBCs","Platelets","Plasma cells"],0],
+["The human heart has how many chambers?",["2","3","4","5"],2],
+["Normal human body temperature is approximately:",["27°C","37°C","47°C","57°C"],1],
+["Which organ produces bile?",["Stomach","Liver","Kidney","Heart"],1],
+["Bile is stored in the:",["Pancreas","Gallbladder","Spleen","Appendix"],1],
+["Insulin is produced by:",["Pancreas","Liver","Kidney","Thyroid"],0],
+["Which hormone regulates blood glucose?",["Insulin","Adrenaline","Thyroxine","Estrogen"],0],
+["Thyroxine is produced by:",["Thyroid gland","Pancreas","Pituitary","Adrenal gland"],0],
+["The master gland is commonly called:",["Pituitary","Thyroid","Pancreas","Pineal"],0],
+["Adrenaline is secreted by:",["Adrenal glands","Thyroid","Pancreas","Ovaries"],0],
+["The male sex hormone is:",["Estrogen","Testosterone","Insulin","Thyroxine"],1],
+["The female sex hormone is:",["Testosterone","Estrogen","Adrenaline","Glucagon"],1],
+["Fertilization in humans usually occurs in:",["Uterus","Oviduct","Ovary","Vagina"],1],
+["The developing embryo attaches to the:",["Uterus","Ovary","Kidney","Liver"],0],
+["Human sperm are produced in:",["Testes","Ovaries","Kidneys","Liver"],0],
+["Human eggs are produced in:",["Ovaries","Testes","Uterus","Pancreas"],0],
+["The chromosome number in a normal human body cell is:",["23","44","46","48"],2],
+["Human gametes contain:",["46 chromosomes","23 chromosomes","44 chromosomes","48 chromosomes"],1],
+["DNA stands for:",["Deoxyribonucleic acid","Dinitrogen acid","Deoxygenated nucleic acid","Dynamic nucleic acid"],0],
+["RNA stands for:",["Ribonucleic acid","Reactive nitrogen acid","Reduced nucleic acid","Ribosomal nitrogen acid"],0],
+["A gene is a unit of:",["Heredity","Digestion","Respiration","Excretion"],0],
+["Gregor Mendel is known for:",["Genetics","Evolution","Ecology","Anatomy"],0],
+["The father of genetics is:",["Darwin","Mendel","Pasteur","Hooke"],1],
+["Natural selection is associated with:",["Darwin","Mendel","Newton","Harvey"],0],
+["The theory of evolution by natural selection was proposed by:",["Charles Darwin","Gregor Mendel","Robert Hooke","Louis Pasteur"],0],
+["A group of similar cells performing a function is:",["Tissue","Organ","System","Organism"],0],
+["A group of organs working together forms:",["Organ system","Tissue","Cell","Gene"],0],
+["The study of tissues is called:",["Histology","Ecology","Genetics","Taxonomy"],0],
+["The study of heredity is:",["Genetics","Botany","Zoology","Anatomy"],0],
+["The study of plants is:",["Botany","Zoology","Ecology","Mycology"],0],
+["The study of animals is:",["Zoology","Botany","Cytology","Histology"],0],
+["The study of fungi is:",["Mycology","Virology","Botany","Ecology"],0],
+["The study of viruses is:",["Virology","Mycology","Zoology","Genetics"],0],
+["Bacteria are generally:",["Prokaryotes","Eukaryotes","Viruses","Plants"],0],
+["Fungi are:",["Eukaryotes","Prokaryotes","Viruses","Archaea only"],0],
+["A virus can reproduce only inside a:",["Host cell","Rock","Water molecule","Plant root"],0],
 ["Which organism makes its own food?",["Autotroph","Heterotroph","Parasite","Decomposer"],0],
-["Organisms that break down dead matter are called?",["Producers","Consumers","Decomposers","Predators"],2],
-["First level of a food chain is usually?",["Producer","Carnivore","Decomposer","Omnivore"],0],
-["Green plants are?",["Consumers","Producers","Decomposers","Parasites"],1],
-["Which is a renewable source of energy?",["Coal","Petroleum","Solar energy","Natural gas"],2],
-["Which is a non-renewable resource?",["Sunlight","Wind","Coal","Water"],2],
-["Earth's natural satellite is?",["Mars","Moon","Venus","Sun"],1],
-["The process by which plants lose water is?",["Respiration","Transpiration","Digestion","Germination"],1],
-["Movement of water through a plant mainly occurs through?",["Xylem","Phloem","Stomata","Flower"],0],
-["Food is transported in plants through?",["Xylem","Phloem","Root hair","Stomata"],1],
-["Tiny pores on leaves are called?",["Nephrons","Stomata","Alveoli","Villi"],1],
-["Seed develops from?",["Ovule","Anther","Petal","Sepal"],0],
-["Fruit develops mainly from?",["Ovary","Root","Stem","Leaf"],0],
-["Transfer of pollen from anther to stigma is?",["Fertilization","Pollination","Germination","Respiration"],1],
-["Which part of flower produces pollen?",["Stigma","Anther","Ovary","Sepal"],1],
-["Which part receives pollen?",["Anther","Stigma","Filament","Ovary"],1],
-["Which is an example of asexual reproduction?",["Binary fission","Fertilization","Fusion of gametes","Pollination"],0],
-["Binary fission is commonly seen in?",["Amoeba","Human","Rose","Mango"],0],
-["Budding occurs in?",["Yeast","Human","Fish","Mango"],0],
-["Which organism can regenerate body parts?",["Planaria","Human","Cow","Dog"],0],
-["Which disease is caused by bacteria?",["Typhoid","AIDS","Polio","Measles"],0],
-["AIDS is caused by?",["HIV","HBV","TB bacteria","Plasmodium"],0],
-["Which organ protects the brain?",["Rib cage","Skull","Pelvis","Femur"],1],
-["Which bone is the longest in human body?",["Femur","Tibia","Humerus","Radius"],0],
-["Which is the smallest bone in human body?",["Femur","Stapes","Tibia","Ulna"],1],
-["How many teeth does a normal adult usually have?",["28","30","32","36"],2],
-["Which teeth are used mainly for cutting?",["Canines","Incisors","Molars","Premolars"],1],
-["Which teeth are used mainly for tearing?",["Incisors","Canines","Molars","Premolars"],1],
-["Which teeth are used mainly for grinding?",["Incisors","Canines","Molars","Premolars"],2],
-["Which organ is responsible for thinking?",["Brain","Heart","Liver","Kidney"],0],
-["Which blood group is called universal donor for red cells?",["A","B","AB","O negative"],3],
-["Which blood group is called universal recipient for red cells?",["A","B","AB","O negative"],2],
-["What is the liquid part of blood?",["Plasma","Platelet","RBC","WBC"],0],
-["Which cells help in blood clotting?",["RBC","WBC","Platelets","Neurons"],2],
-["Which system removes waste from the body?",["Excretory system","Digestive system","Skeletal system","Reproductive system"],0],
-["Which organ stores urine?",["Kidney","Urinary bladder","Ureter","Urethra"],1],
-["Tube carrying urine from kidney to bladder?",["Urethra","Ureter","Trachea","Oesophagus"],1],
-["Which tube carries urine out of body?",["Ureter","Urethra","Trachea","Bronchus"],1]
+["Organisms that obtain food from others are:",["Heterotrophs","Autotrophs","Producers","Chemotrophs"],0],
+["Green plants are generally:",["Producers","Consumers","Decomposers","Parasites"],0],
+["Organisms that break down dead matter are:",["Decomposers","Producers","Herbivores","Carnivores"],0],
+["An organism that eats plants is:",["Herbivore","Carnivore","Omnivore","Decomposer"],0],
+["An organism that eats other animals is:",["Carnivore","Herbivore","Producer","Autotroph"],0],
+["An organism that eats both plants and animals is:",["Omnivore","Herbivore","Carnivore","Producer"],0],
+["The process of breaking food into simpler substances is:",["Digestion","Respiration","Circulation","Excretion"],0],
+["Digestion of starch begins in the:",["Mouth","Stomach","Small intestine","Large intestine"],0],
+["Saliva contains the enzyme:",["Amylase","Pepsin","Trypsin","Lipase"],0],
+["Protein digestion begins mainly in the:",["Stomach","Mouth","Large intestine","Rectum"],0],
+["Pepsin digests:",["Proteins","Fats","Starch","Vitamins"],0],
+["Most nutrient absorption occurs in:",["Small intestine","Stomach","Large intestine","Esophagus"],0],
+["Villi are found in the:",["Small intestine","Liver","Stomach","Kidney"],0],
+["The large intestine mainly absorbs:",["Water","Protein","Oxygen","Bile"],0],
+["Respiration releases:",["Energy","DNA","Bile","Chlorophyll"],0],
+["Aerobic respiration requires:",["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],0],
+["The main site of aerobic respiration is:",["Mitochondria","Nucleus","Ribosome","Cell wall"],0],
+["ATP is mainly used as:",["Energy currency","Genetic material","Pigment","Hormone"],0],
+["The breathing organ in humans is:",["Lungs","Kidneys","Liver","Skin"],0],
+["Gas exchange in lungs occurs in:",["Alveoli","Bronchi","Trachea","Nose"],0],
+["The windpipe is called:",["Trachea","Esophagus","Bronchiole","Larynx"],0],
+["The diaphragm helps in:",["Breathing","Digestion","Vision","Hearing"],0],
+["Plants absorb water mainly through:",["Roots","Flowers","Fruits","Seeds"],0],
+["Water is transported in plants by:",["Xylem","Phloem","Cambium","Epidermis"],0],
+["Food is transported in plants by:",["Phloem","Xylem","Root hair","Stoma"],0],
+["Tiny pores on leaves are called:",["Stomata","Villi","Alveoli","Nephrons"],0],
+["The male reproductive part of a flower is:",["Stamen","Carpel","Sepal","Petal"],0],
+["The female reproductive part of a flower is:",["Carpel","Stamen","Sepal","Petal"],0],
+["Pollen grains are produced in:",["Anther","Stigma","Ovary","Style"],0],
+["Ovules are present inside the:",["Ovary","Anther","Petal","Sepal"],0],
+["Transfer of pollen to stigma is:",["Pollination","Fertilization","Germination","Transpiration"],0],
+["Fusion of male and female gametes is:",["Fertilization","Pollination","Respiration","Germination"],0],
+["Seed develops from:",["Ovule","Anther","Petal","Stigma"],0],
+["Fruit generally develops from:",["Ovary","Anther","Root","Leaf"],0],
+["Which vitamin is produced in skin in sunlight?",["Vitamin D","Vitamin C","Vitamin B12","Vitamin K"],0],
+["Vitamin C deficiency causes:",["Scurvy","Rickets","Night blindness","Beriberi"],0],
+["Vitamin D deficiency can cause:",["Rickets","Scurvy","Anemia","Goitre"],0],
+["Iron deficiency commonly causes:",["Anemia","Rickets","Scurvy","Diabetes"],0],
+["Iodine deficiency can cause:",["Goitre","Scurvy","Rickets","Malaria"],0],
+["Malaria is caused by:",["Plasmodium","Bacteria","Virus","Fungus"],0],
+["Malaria is transmitted by:",["Female Anopheles mosquito","Housefly","Male mosquito","Tick"],0],
+["Dengue is transmitted mainly by:",["Aedes mosquito","Anopheles mosquito","Housefly","Flea"],0],
+["Tuberculosis is caused by:",["Bacteria","Virus","Protozoa","Fungus"],0],
+["AIDS is caused by:",["HIV","HBV","Bacteria","Plasmodium"],0],
+["Antibodies are mainly involved in:",["Immune response","Digestion","Respiration","Photosynthesis"],0],
+["Vaccines help develop:",["Immunity","Digestion","Vision","Respiration"],0]
+
 ];
 
-let order=[];
-let i=0;
+
+/* =========================
+   PHYSICS - 100 QUESTIONS
+========================= */
+
+const physics = [
+
+["SI unit of length is:",["metre","kilogram","second","newton"],0],
+["SI unit of mass is:",["kilogram","gram","newton","joule"],0],
+["SI unit of time is:",["second","minute","hour","day"],0],
+["SI unit of force is:",["newton","joule","watt","pascal"],0],
+["SI unit of energy is:",["joule","watt","newton","volt"],0],
+["SI unit of power is:",["watt","joule","ampere","ohm"],0],
+["SI unit of electric current is:",["ampere","volt","ohm","watt"],0],
+["SI unit of voltage is:",["volt","ampere","ohm","coulomb"],0],
+["SI unit of resistance is:",["ohm","volt","watt","ampere"],0],
+["SI unit of frequency is:",["hertz","joule","newton","pascal"],0],
+["Speed is distance divided by:",["Time","Mass","Force","Energy"],0],
+["Velocity is a:",["Vector quantity","Scalar quantity","Constant only","Unit"],0],
+["Speed is a:",["Scalar quantity","Vector quantity","Force","Energy"],0],
+["Acceleration is rate of change of:",["Velocity","Distance","Mass","Energy"],0],
+["Force equals mass multiplied by:",["Acceleration","Velocity","Distance","Time"],0],
+["Newton's first law is also called law of:",["Inertia","Acceleration","Action","Gravitation"],0],
+["Newton's second law relates force to:",["Mass and acceleration","Mass only","Energy only","Speed only"],0],
+["Newton's third law describes:",["Action and reaction","Inertia","Gravity only","Energy"],0],
+["Momentum equals:",["Mass × velocity","Mass × acceleration","Force × time","Energy × time"],0],
+["Work is done when force causes:",["Displacement","Mass","Temperature","Density"],0],
+["Work is measured in:",["Joule","Newton","Watt","Pascal"],0],
+["Power is rate of doing:",["Work","Force","Mass","Distance"],0],
+["Kinetic energy is energy of:",["Motion","Position","Heat only","Sound only"],0],
+["Potential energy is energy due to:",["Position","Motion","Speed only","Pressure only"],0],
+["Gravitational acceleration on Earth is approximately:",["9.8 m/s²","98 m/s²","0.98 m/s²","1.8 m/s²"],0],
+["Weight is:",["Mass × gravitational acceleration","Mass ÷ acceleration","Force ÷ time","Speed × time"],0],
+["Mass is measured using a:",["Balance","Thermometer","Ammeter","Barometer"],0],
+["Temperature is measured using:",["Thermometer","Ammeter","Voltmeter","Barometer"],0],
+["Atmospheric pressure is measured by:",["Barometer","Thermometer","Ammeter","Hygrometer"],0],
+["Electric current is measured by:",["Ammeter","Voltmeter","Barometer","Thermometer"],0],
+["Voltage is measured by:",["Voltmeter","Ammeter","Ohmmeter","Barometer"],0],
+["Ohm's law is:",["V = IR","P = VI","F = ma","E = mc²"],0],
+["Resistance opposes:",["Electric current","Mass","Gravity","Light"],0],
+["A good conductor has:",["Low resistance","High resistance","No atoms","No electrons"],0],
+["Rubber is generally a:",["Insulator","Conductor","Metal","Semiconductor only"],0],
+["Copper is a good:",["Conductor","Insulator","Magnet only","Semiconductor"],0],
+["Electric power can be calculated as:",["VI","IR only","F/m","m/a"],0],
+["A fuse is used to:",["Protect a circuit","Increase voltage","Store charge","Produce light"],0],
+["A battery converts chemical energy into:",["Electrical energy","Sound energy","Nuclear energy","Gravitational energy"],0],
+["A magnet has:",["North and south poles","Only north pole","Only south pole","No poles"],0],
+["Like magnetic poles:",["Repel","Attract","Disappear","Rotate only"],0],
+["Unlike magnetic poles:",["Attract","Repel","Disappear","Heat"],0],
+["A compass needle points approximately:",["North-south","East-west","Up-down","Randomly"],0],
+["Light travels fastest in:",["Vacuum","Water","Glass","Diamond"],0],
+["Speed of light in vacuum is approximately:",["3×10⁸ m/s","3×10⁶ m/s","3×10⁴ m/s","3×10² m/s"],0],
+["Light bouncing from a surface is:",["Reflection","Refraction","Diffraction","Dispersion"],0],
+["Bending of light between media is:",["Refraction","Reflection","Absorption","Emission"],0],
+["Splitting of white light into colours is:",["Dispersion","Reflection","Conduction","Diffusion"],0],
+["A rainbow is mainly caused by:",["Dispersion of light","Only reflection","Only heating","Magnetism"],0],
+["A plane mirror forms an image that is:",["Virtual","Always real","Always inverted vertically","Larger always"],0],
+["A convex lens is generally:",["Converging","Diverging","Opaque","Flat"],0],
+["A concave lens is generally:",["Diverging","Converging","Reflecting only","Opaque"],0],
+["A magnifying glass uses a:",["Convex lens","Concave lens","Plane mirror","Prism only"],0],
+["The unit of lens power is:",["Dioptre","Watt","Newton","Pascal"],0],
+["Sound requires a:",["Medium","Vacuum","Magnetic field","Light source"],0],
+["Sound cannot travel through:",["Vacuum","Water","Air","Steel"],0],
+["Frequency is measured in:",["Hertz","Joule","Watt","Newton"],0],
+["Pitch depends mainly on:",["Frequency","Amplitude","Speed","Mass"],0],
+["Loudness depends mainly on:",["Amplitude","Frequency","Wavelength only","Speed"],0],
+["Ultrasound has frequency above:",["20 kHz","20 Hz","2 Hz","200 Hz"],0],
+["Human audible range is approximately:",["20 Hz–20 kHz","2–20 Hz","20–200 Hz","20–200 kHz"],0],
+["Heat transfer through solids mainly occurs by:",["Conduction","Convection","Radiation only","Reflection"],0],
+["Heat transfer in liquids mainly occurs by:",["Convection","Conduction only","Reflection","Refraction"],0],
+["Heat from the Sun reaches Earth by:",["Radiation","Conduction","Convection","Diffusion"],0],
+["Temperature is related to average:",["Kinetic energy of particles","Mass only","Volume only","Weight only"],0],
+["Water boils at sea level at approximately:",["100°C","0°C","50°C","200°C"],0],
+["Water freezes at:",["0°C","10°C","50°C","100°C"],0],
+["Density equals mass divided by:",["Volume","Area","Time","Force"],0],
+["Pressure equals force divided by:",["Area","Mass","Volume","Time"],0],
+["SI unit of pressure is:",["Pascal","Newton","Joule","Watt"],0],
+["Buoyant force is related to:",["Displaced fluid","Mass only","Temperature only","Electric current"],0],
+["Archimedes' principle concerns:",["Buoyancy","Electricity","Magnetism","Sound"],0],
+["An object floats when its average density is:",["Less than the fluid","Greater than fluid","Always equal to zero","Infinite"],0],
+["The Earth attracts objects due to:",["Gravity","Magnetism only","Electricity only","Friction"],0],
+["The force opposing motion between surfaces is:",["Friction","Gravity","Buoyancy","Magnetism"],0],
+["Friction can be reduced using:",["Lubricants","Sandpaper","Roughness","Extra load"],0],
+["A lever is a type of:",["Simple machine","Electric circuit","Wave","Lens"],0],
+["A pulley can change the:",["Direction of force","Mass of object","Density","Temperature"],0],
+["Mechanical advantage compares:",["Load to effort","Mass to time","Energy to temperature","Speed to distance"],0],
+["Energy cannot be created or destroyed according to law of:",["Conservation of energy","Inertia","Reflection","Refraction"],0],
+["The unit of charge is:",["Coulomb","Ampere","Volt","Ohm"],0],
+["Electrons have:",["Negative charge","Positive charge","No charge","Variable mass only"],0],
+["Protons have:",["Positive charge","Negative charge","No charge","Double charge"],0],
+["Neutrons have:",["No electric charge","Positive charge","Negative charge","Variable charge"],0],
+["The nucleus contains:",["Protons and neutrons","Only electrons","Only protons","Only neutrons"],0],
+["Electron discovery is associated with:",["J. J. Thomson","Newton","Einstein","Faraday"],0],
+["Radioactivity was discovered by:",["Henri Becquerel","Newton","Ohm","Pascal"],0],
+["The unit of radioactive activity is:",["Becquerel","Newton","Joule","Watt"],0],
+["A transformer works with:",["Alternating current","Direct current only","Static charge only","Sound"],0],
+["A step-up transformer increases:",["Voltage","Mass","Frequency always","Resistance only"],0],
+["The device converting electrical energy into mechanical energy is:",["Motor","Generator","Transformer","Fuse"],0],
+["A generator converts mechanical energy into:",["Electrical energy","Chemical energy","Light only","Heat only"],0],
+["Solar cells convert sunlight into:",["Electrical energy","Sound energy","Mechanical energy","Chemical fuel directly"],0],
+["The SI unit of wavelength is:",["Metre","Hertz","Second","Newton"],0],
+["Wavelength is the distance between successive:",["Corresponding points on waves","Objects","Charges","Magnets"],0],
+["Wave speed equals:",["Frequency × wavelength","Frequency ÷ wavelength","Mass × velocity","Force × area"],0],
+["A wave carrying energy without net matter transport is:",["Wave motion","Mass flow","Conduction","Combustion"],0],
+["Earth's natural satellite is:",["Moon","Mars","Sun","Venus"],0],
+["The planet closest to the Sun is:",["Mercury","Venus","Earth","Mars"],0],
+["The force keeping planets in orbit is:",["Gravity","Friction","Electric force","Buoyant force"],0],
+["Our galaxy is called:",["Milky Way","Andromeda","Whirlpool","Sombrero"],0],
+["The Sun is a:",["Star","Planet","Satellite","Comet"],0]
+];
+
+
+/* =========================
+   CHEMISTRY - 100 QUESTIONS
+========================= */
+
+const chemistry = [
+
+["Smallest unit of an element retaining its properties is:",["Atom","Molecule","Cell","Ion only"],0],
+["The center of an atom is called:",["Nucleus","Shell","Orbital","Bond"],0],
+["Electron has:",["Negative charge","Positive charge","No charge","Double charge"],0],
+["Proton has:",["Positive charge","Negative charge","No charge","Variable charge"],0],
+["Neutron has:",["No charge","Positive charge","Negative charge","Double charge"],0],
+["Atomic number equals number of:",["Protons","Neutrons","Electrons + neutrons","Shells"],0],
+["Mass number equals:",["Protons + neutrons","Protons + electrons","Electrons + neutrons","Only electrons"],0],
+["Periodic table is arranged mainly by:",["Atomic number","Mass only","Density","Colour"],0],
+["Symbol of hydrogen is:",["H","He","Hy","Hg"],0],
+["Symbol of oxygen is:",["O","Ox","Om","Og"],0],
+["Symbol of carbon is:",["C","Ca","Co","Cr"],0],
+["Symbol of sodium is:",["Na","So","S","Sd"],0],
+["Symbol of potassium is:",["K","P","Po","Pt"],0],
+["Symbol of iron is:",["Fe","Ir","I","In"],0],
+["Symbol of gold is:",["Au","Ag","Gd","Go"],0],
+["Symbol of silver is:",["Ag","Au","Si","S"],0],
+["Symbol of chlorine is:",["Cl","C","Ch","Cr"],0],
+["Symbol of calcium is:",["Ca","C","Cl","Cm"],0],
+["Symbol of nitrogen is:",["N","Ni","Na","Ne"],0],
+["Symbol of magnesium is:",["Mg","Mn","Ma","Ms"],0],
+["A substance with pH less than 7 is:",["Acidic","Basic","Neutral","Metallic"],0],
+["A substance with pH greater than 7 is:",["Basic","Acidic","Neutral","Inert"],0],
+["Pure water at room temperature has pH approximately:",["7","1","14","10"],0],
+["An acid turns blue litmus:",["Red","Blue","Green","Yellow"],0],
+["A base turns red litmus:",["Blue","Red","Green","White"],0],
+["Common salt is:",["Sodium chloride","Sodium carbonate","Calcium oxide","Potassium nitrate"],0],
+["Chemical formula of water is:",["H₂O","CO₂","O₂","H₂"],0],
+["Chemical formula of carbon dioxide is:",["CO₂","CO","C₂O","CaCO₃"],0],
+["Chemical formula of oxygen gas is:",["O₂","O","O₃","Ox"],0],
+["Chemical formula of nitrogen gas is:",["N₂","N","NO₂","NH₃"],0],
+["Chemical formula of ammonia is:",["NH₃","NH₂","NO₃","N₂H"],0],
+["Chemical formula of methane is:",["CH₄","CH₃","C₂H₆","CO₂"],0],
+["Chemical formula of sodium chloride is:",["NaCl","Na₂Cl","NaCl₂","NCl"],0],
+["Chemical formula of calcium carbonate is:",["CaCO₃","CaCl₂","CaO","CaSO₄"],0],
+["Chemical formula of sulfuric acid is:",["H₂SO₄","HCl","HNO₃","H₂CO₃"],0],
+["Chemical formula of hydrochloric acid is:",["HCl","H₂SO₄","HNO₃","NaOH"],0],
+["Chemical formula of nitric acid is:",["HNO₃","HCl","H₂SO₄","NH₃"],0],
+["Chemical formula of sodium hydroxide is:",["NaOH","NaCl","Na₂O","NaH"],0],
+["A reaction between acid and base is:",["Neutralization","Oxidation only","Reduction only","Combustion only"],0],
+["Neutralization generally produces:",["Salt and water","Only oxygen","Only hydrogen","Carbon"],0],
+["Acids generally contain:",["Hydrogen ions in water","Only oxygen","Only metals","Only carbon"],0],
+["Bases generally produce:",["Hydroxide ions in water","Hydrogen gas only","Carbon dioxide","Nitrogen"],0],
+["An indicator is used to:",["Show acidity/basicity","Measure mass","Measure density","Produce oxygen"],0],
+["Phenolphthalein is generally:",["Colourless in acid and pink in base","Blue in acid","Red in neutral","Green always"],0],
+["Methyl orange is:",["Red in acid and yellow in base","Blue in acid","Green in base","White always"],0],
+["A catalyst changes reaction rate without being:",["Consumed permanently","Present","A chemical","Useful"],0],
+["Catalysts generally:",["Lower activation energy","Increase mass","Change atomic number","Create matter"],0],
+["Oxidation traditionally means:",["Gain of oxygen","Loss of oxygen","Gain of neutrons","Loss of protons"],0],
+["Reduction traditionally means:",["Loss of oxygen","Gain of oxygen","Gain of protons","Loss of electrons only"],0],
+["Rusting is mainly oxidation of:",["Iron","Copper","Gold","Silver"],0],
+["Rust requires oxygen and:",["Water/moisture","Nitrogen only","Helium","Carbon only"],0],
+["Combustion usually requires:",["Oxygen","Nitrogen","Helium","Argon"],0],
+["A substance that burns is called:",["Combustible","Catalyst","Solvent","Indicator"],0],
+["The gas supporting combustion is:",["Oxygen","Nitrogen","Hydrogen","Carbon dioxide"],0],
+["Carbon dioxide is generally:",["Non-combustible","Highly combustible","A metal","An acid metal"],0],
+["A solution is a:",["Homogeneous mixture","Pure element only","Heterogeneous mixture only","Compound only"],0],
+["The substance being dissolved is:",["Solute","Solvent","Solution","Catalyst"],0],
+["The substance doing the dissolving is:",["Solvent","Solute","Precipitate","Catalyst"],0],
+["Salt dissolved in water forms a:",["Solution","Suspension only","Element","Gas"],0],
+["A mixture of sand and water can be separated by:",["Filtration","Distillation only","Sublimation only","Chromatography only"],0],
+["Salt from salt water can be obtained by:",["Evaporation","Filtration","Magnetism","Decantation only"],0],
+["Distillation separates substances mainly using differences in:",["Boiling points","Colours","Mass numbers","Atomic charges"],0],
+["Chromatography can separate:",["Components of mixtures","Atoms into protons","Nuclei","Metals into electrons"],0],
+["An alloy is a:",["Mixture containing metals","Pure element","Gas only","Acid only"],0],
+["Brass mainly contains:",["Copper and zinc","Iron and carbon","Copper and tin","Aluminium and iron"],0],
+["Bronze mainly contains:",["Copper and tin","Copper and zinc","Iron and carbon","Silver and gold"],0],
+["Steel mainly contains:",["Iron and carbon","Copper and zinc","Gold and silver","Sodium and chlorine"],0],
+["Diamond and graphite are forms of:",["Carbon","Oxygen","Iron","Silicon"],0],
+["Graphite can conduct electricity because of:",["Delocalized electrons","No electrons","Water","Protons"],0],
+["Diamond is very hard because of its:",["Strong covalent network","Weak ionic bonds","Liquid structure","Metal ions only"],0],
+["The bond formed by sharing electrons is:",["Covalent bond","Ionic bond","Metallic bond only","Hydrogen ion"],0],
+["The bond formed by transfer of electrons is:",["Ionic bond","Covalent bond","Metallic bond","Peptide bond"],0],
+["Metallic bonding involves:",["Delocalized electrons","Only neutrons","Water molecules","Protons only"],0],
+["NaCl contains mainly:",["Ionic bonds","Covalent bonds only","Metallic bonds","Hydrogen bonds only"],0],
+["H₂ molecule contains:",["Covalent bond","Ionic bond","Metallic bond","No bond"],0],
+["The valency of hydrogen is usually:",["1","2","3","4"],0],
+["The valency of oxygen is usually:",["2","1","3","4"],0],
+["The valency of carbon is usually:",["4","1","2","3"],0],
+["The noble gases are generally:",["Very unreactive","Highly reactive","Strong acids","Metals"],0],
+["Helium is a:",["Noble gas","Halogen","Alkali metal","Transition metal"],0],
+["Chlorine belongs to:",["Halogens","Noble gases","Alkali metals","Lanthanides"],0],
+["Fluorine is a:",["Halogen","Noble gas","Alkaline earth metal","Metal"],0],
+["Sodium belongs to:",["Alkali metals","Halogens","Noble gases","Transition metals"],0],
+["Calcium belongs to:",["Alkaline earth metals","Halogens","Noble gases","Alkali metals"],0],
+["Iron is a:",["Transition metal","Noble gas","Halogen","Alkali metal"],0],
+["Mercury is liquid at room temperature and is a:",["Metal","Nonmetal","Noble gas","Halogen"],0],
+["Bromine is liquid at room temperature and is a:",["Nonmetal","Metal","Noble gas","Alkali metal"],0],
+["The most abundant gas in Earth's atmosphere is:",["Nitrogen","Oxygen","Carbon dioxide","Hydrogen"],0],
+["Oxygen makes up approximately:",["21% of air","50%","78%","1%"],0],
+["Nitrogen makes up approximately:",["78% of air","21%","10%","1%"],0],
+["Ozone is a form of:",["Oxygen","Nitrogen","Carbon","Hydrogen"],0],
+["Ozone formula is:",["O₃","O₂","O","O₄"],0],
+["The greenhouse gas among these is:",["Carbon dioxide","Oxygen","Nitrogen","Argon"],0],
+["The gas used by plants in photosynthesis is:",["Carbon dioxide","Oxygen","Nitrogen","Hydrogen"],0],
+["The gas released in photosynthesis is:",["Oxygen","Carbon dioxide","Nitrogen","Methane"],0],
+["The main component of natural gas is:",["Methane","Oxygen","Nitrogen","Hydrogen"],0],
+["LPG mainly contains:",["Propane and butane","Oxygen and nitrogen","Hydrogen only","Carbon dioxide"],0],
+["CNG mainly contains:",["Methane","Oxygen","Propane only","Butane only"],0],
+["Ethanol is an example of:",["Alcohol","Acid","Base","Salt"],0],
+["Acetic acid is found in:",["Vinegar","Soap","Baking soda","Salt"],0],
+["Baking soda is:",["Sodium bicarbonate","Sodium chloride","Calcium carbonate","Sodium hydroxide"],0],
+["Washing soda is:",["Sodium carbonate","Sodium bicarbonate","Sodium chloride","Calcium oxide"],0],
+["Bleaching powder is commonly used for:",["Disinfection","Making sugar","Increasing acidity","Producing metals"],0],
+["Soap is generally a salt of:",["Fatty acids","Hydrochloric acid","Nitric acid","Sulfuric acid"],0],
+["The pH scale generally ranges from:",["0 to 14","1 to 7","7 to 21","0 to 100"],0],
+["A pH of 2 is:",["Strongly acidic","Neutral","Basic","Metallic"],0],
+["A pH of 12 is:",["Basic","Acidic","Neutral","Gas"],0],
+["A pH of 7 is:",["Neutral","Acidic","Basic","Oxidizing"],0],
+["Chemical equations should be balanced to obey conservation of:",["Mass","Temperature","Colour","Pressure"],0]
+];
+
+
+/* =========================
+   QUIZ ENGINE
+========================= */
+
+let currentSubject="";
+let questions=[];
+let current=0;
 let score=0;
 let answered=false;
 
-function shuffle(a){
-  for(let j=a.length-1;j>0;j--){
-    let k=Math.floor(Math.random()*(j+1));
-    [a[j],a[k]]=[a[k],a[j]];
-  }
-  return a;
-}
+function startQuiz(subject){
 
-function start(){
-  order=shuffle([...Array(qs.length).keys()]);
-  i=0;
+  currentSubject=subject;
+
+  if(subject==="Biology") questions=biology;
+  if(subject==="Physics") questions=physics;
+  if(subject==="Chemistry") questions=chemistry;
+
+  current=0;
   score=0;
   answered=false;
-  
-  render();
+
+  document.getElementById("home").style.display="none";
+  document.getElementById("result").style.display="none";
+  document.getElementById("quiz").style.display="block";
+
+  document.getElementById("subjectTitle").textContent=
+    subject==="Biology"?"🧬 Biology":
+    subject==="Physics"?"⚡ Physics":"🧪 Chemistry";
+
+  showQuestion();
 }
 
-function render(){
-  if(i>=order.length){
-    document.getElementById('qno').textContent='Test Complete!';
-    document.getElementById('q').textContent='🎉 Excellent! Performance: '+score+'/'+order.length;
-    document.getElementById('ans').innerHTML='<p>Accuracy: '+Math.round(score/order.length*100)+'%</p>';
-    return;
-  }
+function showQuestion(){
 
   answered=false;
-let x=qs[order[i]];
 
-q.textContent='Question '+(i+1)+'/'+order.length;
-q.textContent=x[0];
+  const q=questions[current];
 
-ans.innerHTML='';
+  document.getElementById("counter").textContent=
+    (current+1)+" / "+questions.length;
 
-x[1].forEach((option,index)=>{
-  let b=document.createElement('button');
-  b.textContent=option;
-  b.style.display='block';
-  b.style.width='100%';
-  b.style.margin='6px 0';
-  b.onclick=function(){
+  document.getElementById("question").textContent=q[0];
+
+  document.getElementById("bar").style.width=
+    ((current)/questions.length*100)+"%";
+
+  const box=document.getElementById("options");
+  box.innerHTML="";
+
+  q[1].forEach((answer,index)=>{
+
+    const btn=document.createElement("button");
+
+    btn.className="option";
+    btn.textContent=
+      String.fromCharCode(65+index)+". "+answer;
+
+    btn.onclick=()=>checkAnswer(index,btn);
+
+    box.appendChild(btn);
+  });
+
+  document.getElementById("next").disabled=true;
+
+  if(current===questions.length-1){
+    document.getElementById("next").textContent="Finish Quiz ✓";
+  }else{
+    document.getElementById("next").textContent="Next Question ➜";
+  }
+}
+
+function checkAnswer(selected,button){
+
   if(answered)return;
+
   answered=true;
 
-  if(index==x[2]){
+  const correct=questions[current][2];
+  const all=document.querySelectorAll(".option");
+
+  all.forEach((btn,i)=>{
+    btn.disabled=true;
+
+    if(i===correct){
+      btn.classList.add("correct");
+    }
+  });
+
+  if(selected===correct){
     score++;
-    b.style.background='#d1fae5';
   }else{
-    b.style.background='#fee2e2';
+    button.classList.add("wrong");
   }
-};
 
-ans.appendChild(b);
-});
-}
-function show(id,btn){
-  document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-
-  if(id==='test') start();
+  document.getElementById("next").disabled=false;
 }
 
-function next(){
-  if(!answered){
-    alert('Pehle answer select karo!');
+function nextQuestion(){
+
+  if(!answered)return;
+
+  current++;
+
+  if(current>=questions.length){
+    finishQuiz();
     return;
   }
-  i++;
-  render();
+
+  showQuestion();
 }
 
-function save(){
-  const input=document.getElementById('name');
-  const hello=document.getElementById('hello');
-  const n=input.value.trim();
+function finishQuiz(){
 
-  if(n){
-    localStorage.setItem('name',n);
-    hello.textContent=`Hi, ${n} 👋`;
-    alert('Profile saved!');
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("result").style.display="block";
+
+  document.getElementById("score").textContent=
+    score+" / "+questions.length;
+
+  let percentage=Math.round(score/questions.length*100);
+
+  let message="";
+
+  if(percentage>=90){
+    message="🏆 Excellent! Science champion!";
+  }else if(percentage>=75){
+    message="👏 Great job! Keep practicing!";
+  }else if(percentage>=50){
+    message="👍 Good attempt! You can improve!";
+  }else{
+    message="💪 Keep studying and try again!";
   }
+
+  document.getElementById("resultText").textContent=
+    currentSubject+" • "+percentage+"% • "+message;
+
+  localStorage.setItem(
+    "lastQuiz",
+    JSON.stringify({
+      subject:currentSubject,
+      score:score,
+      total:questions.length
+    })
+  );
 }
 
-const nav=document.querySelectorAll('.nav button');
+function goHome(){
 
-nav.forEach((button,index)=>{
-  button.onclick=()=>{
-    const pages=['home','study','test','plan','profile'];
-    show(pages[index],button);
-  };
-}); nhi 
-    if(!response.ok){
-      throw new Error('AI request failed');
-    }
-
-    const result=await response.text();
-
-    answer.textContent=result;
-
-  }catch(error){
-
-    answer.textContent=
-      'AI abhi connect nahi ho pa raha. Internet check karke dobara try karo.';
-
-  }
+  document.getElementById("result").style.display="none";
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("home").style.display="block";
 }
-</script></body></html>
+
+</script>
+
+</body>
+</html>
