@@ -14,6 +14,16 @@ function note(t){event.stopPropagation();document.getElementById('nt').textConte
 function render(){let x=qs[i];qno.textContent=`Question ${i+1}/${qs.length}`;q.textContent=x[0];ans.innerHTML='';x[1].forEach((a,j)=>{let b=document.createElement('button');b.className='option';b.textContent=a;b.onclick=()=>{sel=j;document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));b.classList.add('selected')};ans.appendChild(b)})}
 function next(){if(sel<0)return alert('Pehle answer select karo');if(sel===qs[i][2])s++;if(i===qs.length-1){score.textContent=`${s} / ${qs.length}`;acc.textContent=`Accuracy: ${Math.round(s/qs.length*100)}%`;show('result')}else{i++;sel=-1;render()}}
 function start(){i=0;s=0;sel=-1;show('test')}
-function save(){let n=name.value.trim();if(n){localStorage.name=n;hello.textContent=`Hi, ${n} 👋`;alert('Profile saved!')}}
-if(localStorage.name){hello.textContent=`Hi, ${localStorage.name} 👋`;name.value=localStorage.name}
+function save(){
+  let n=document.getElementById("name").value.trim();
+  if(n){
+    localStorage.setItem("name",n);
+    document.getElementById("hello").textContent=`Hi, ${n} 👋`;
+    alert("Profile saved!");
+  }
+}
+if(localStorage.getItem("name")){
+  document.getElementById("hello").textContent=`Hi, ${localStorage.getItem("name")} 👋`;
+  document.getElementById("name").value=localStorage.getItem("name");
+}
 </script></body></html>
